@@ -8,5 +8,9 @@
     "type": "git"
   },
   "author": "Galen Goforth <galengoforth@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
 }
