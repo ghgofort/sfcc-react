@@ -1,0 +1,12 @@
+{
+  "name": "SFCC-React",
+  "version": "0.1.0",
+  "description": "POC for use of ReactJS with Sales Force Commerce Cloud e-commerce platform.",
+  "main": "index.js",
+  "repository": {
+    "url": "ghgoforth@bitbucket.org:ghgoforth/dw-ghgoforth.git",
+    "type": "git"
+  },
+  "author": "Galen Goforth <galengoforth@gmail.com>",
+  "license": "MIT"
+}
