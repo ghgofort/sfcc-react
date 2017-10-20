@@ -7,29 +7,50 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Routes from '../../menuItems';
 
+const screenSize = Dimensions.get('window');
+
+
 class Home extends Component {
   constructor(props) {
     super(props);
+    const screenSize = Dimensions.get('window');
+
+    this.state = {
+      width: screenSize.width,
+      height: screenSize.height,
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState((prevState, nextProps) => {
-      user: this.props.user;
+      // Recieve props from other components.
     });
   }
 
-
-
   render() {
     return (
-      <View><Text>Hello World</Text></View>
+      <View style={[
+        {
+          width: this.state.width,
+          height: this.state.height
+        },
+        homeStyles.mainView]}>
+        <Text>Hello World</Text>
+      </View>
     );
   }
 }
+
+const homeStyles = StyleSheet.create({
+  mainView: {
+    flexDirection: 'column',
+    backgroundColor: '#cccccc'
+  }
+});
 
 export default connect(({routes}) => ({routes}))(Home);
