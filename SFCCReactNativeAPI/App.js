@@ -4,54 +4,29 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import React, {Component} from 'react';
+import {Router, Scene, ActionConst, Actions} from 'react-native-router-flux';
+import {Provider, connect} from 'react-redux';
+import HomeContainer from './jsx/components/Home/HomeContainer';
+import configureStore from './jsx/configureStore';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const RouterWithRedux = connect()(Router);
+const store = configureStore();
 
-export default class App extends Component<{}> {
+const Scenes = Actions.create(
+<Scene key='root'>
+  <Scene key='home' component={HomeContainer} title='SFCC Home Page' initial>
+  </Scene>
+</Scene>
+);
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Proof Of Concept App for SFCC React Native API
-        </Text>
-        <Text style={styles.instructions}>
-          HOKA One One!
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+      <Provider store={store}>
+        <RouterWithRedux scenes={Scenes}>
+        </RouterWithRedux>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
