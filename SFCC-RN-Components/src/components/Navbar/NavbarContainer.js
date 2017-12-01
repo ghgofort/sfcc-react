@@ -5,7 +5,7 @@
  */
 import { dispatch, connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../studentProfile/actions';
+import * as actionCreators from '../UserAccount/actions';
 import Navbar from './Navbar';
 import { getNavigation, getProfile } from '../../reducers/rootReducer';
 
@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-const navbarContainer = connect(mapDispatchToProps)(Navbar);
+const NavbarContainer = connect(mapDispatchToProps)(Navbar);
 
-export default navbarContainer;
+export default NavbarContainer;

@@ -1,5 +1,5 @@
 /**
- * MyAccountContainer.js
+ * UserAccountContainer.js
  * Container component for handling lifecycle events for the component lifecycle,
  * and connecting the component to the application state.
  */

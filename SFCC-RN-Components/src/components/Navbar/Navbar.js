@@ -19,11 +19,11 @@ import {
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
-import {updateProfile} from '../studentProfile/actions';
+import {updateProfile} from '../UserAccount/actions';
 //import LeftButton from './leftbutton'
 import {dispatch, connect} from 'react-redux';
-import {appConfig} from '../../static/appConfig';
-import {navbarStyles, colors} from '../../static/styles/globalStyles';
+import {appConfig} from '../../config/appConfig';
+import {navbarStyles, colors} from '../../styles/globalStyles';
 
 class Navbar extends Component {
   constructor(props) {
@@ -185,14 +185,14 @@ class Navbar extends Component {
             <TouchableHighlight onPress={this._toggleSidebar.bind(this)}>
               <Image
                 style={navbarStyles.icon}
-                source={require('../../static/images/hamburger_collapsed.png')}/>
+                source={require('../../../assets/images/hamburger_collapsed.png')}/>
             </TouchableHighlight>
             <Text style={{fontSize:20, color:colors.mercury, paddingLeft:5, flex: 3}}>{this.props.pageTitle}</Text>
 
             <TouchableHighlight onPress={this._updateProfile.bind(this)}>
               <Image
                 style={navbarStyles.icon}
-                source={require('../../static/images/profile_icon.png')}/>
+                source={require('../../../assets/images/profile_icon.png')}/>
             </TouchableHighlight>
           </View>
 
