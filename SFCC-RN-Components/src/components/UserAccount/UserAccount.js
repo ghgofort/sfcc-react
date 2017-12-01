@@ -1,11 +1,10 @@
 import React, { Component} from 'react';
 import { View, Text, Dimensions, StyleSheet, Image } from 'react-native';
-import Routes from '../../../Menu_Items';
+import Routes from '../../menuItems';
 import { connect } from 'react-redux';
-import SectionCard from '../global/SectionCard'
-import Footer from '../global/Footer';
-import { colors } from '../../static/styles/globalStyles';
-import Navbar from '../global/Navbar';
+import SectionCard from '../Layout/SectionCard'
+import { colors } from '../../styles/globalStyles';
+import Navbar from '../Navbar/Navbar';
 
 class UserAccount extends Component {
 
@@ -41,10 +40,7 @@ class UserAccount extends Component {
 
 
   render() {
-
-
     return (
-
         <Navbar key={this.displayName} pageTitle={this.displayName} menuItems={this.state.menuItems}>
         <SectionCard style={{flex:1, justifyContent: 'flex-start', marginBottom: 15}}>
 
@@ -52,7 +48,7 @@ class UserAccount extends Component {
             <View style={[{justifyContent: 'center'}, {marginBottom: 10}]}>
               <Image
                 style={{width: 100, height: 100}}
-                source={require('../../static/images/user_icon.png')}>
+                source={require('../../../assets/images/static/images/user_icon.png')}>
               </Image>
             </View>
             <View style={[{paddingLeft: 15}, {paddingBottom: 15}]}>
@@ -112,7 +108,6 @@ class UserAccount extends Component {
           </View>
 
         </SectionCard>
-        <Footer></Footer>
         </Navbar>
 
     );
@@ -155,6 +150,17 @@ const styles = StyleSheet.create({
   sectionStyle: {
     borderBottomWidth: 1,
     borderBottomColor: colors.boulder
+  },
+
+  containerStyle: {
+    padding: 5,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    position: 'relative',
+    marginTop: 10,
+    marginBottom: 0,
+    margin: 10,
+    borderRadius: 5,
   }
 });
 

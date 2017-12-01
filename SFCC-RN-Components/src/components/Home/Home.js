@@ -11,6 +11,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Routes from '../../menuItems';
+import NavbarContainer from '../Navbar/NavbarContainer';
 
 const screenSize = Dimensions.get('window');
 
@@ -23,6 +24,7 @@ class Home extends Component {
     this.state = {
       width: screenSize.width,
       height: screenSize.height,
+      routes: Routes
     };
   }
 
@@ -40,7 +42,9 @@ class Home extends Component {
           height: this.state.height
         },
         homeStyles.mainView]}>
+        <NavbarContainer key='navbarHome' pageTitle='Home' menuItems={this.state.routes}>
         <Text>Hello World</Text>
+        </NavbarContainer>
       </View>
     );
   }

@@ -145,7 +145,7 @@ export const navbarStyles = StyleSheet.create({
   lightText: {
     padding: 15,
     opacity: 1,
-    fontFamily: 'notoserif',
+
     fontSize: 15,
     fontWeight: '600',
     color: '#E6E6E6',
@@ -183,12 +183,12 @@ export const btnStyles = StyleSheet.create({
 
 export const txtStyles = StyleSheet.create({
   txtPrimary: {
-    fontFamily: 'notoserif',
+
     fontSize: 14,
     color: colorAliasNames.teal.shade9,
   },
   txtPrimaryLight: {
-    fontFamily: 'notoserif',
+
     fontSize: 14,
     color: colorAliasNames.teal.shade9,
   }
