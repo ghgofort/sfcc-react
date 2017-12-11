@@ -14,22 +14,22 @@ export const appConfig = {
    * for development purposes than they need to be for production purposes.
    * Options.
    */
-  // instanceType: 'PRODUCTION',
-  instanceType: 'DEBUG',
+  // instanceType: 'production',
+  // instanceType: 'staging',
+  // instanceType: 'qa',
+  instanceType: 'development',
 
   // Definces the settings for each instance type.
   environment: {
 
     // Setup for app development.
-    DEBUG: {
-      // To use the live API calls change this to:
-      //api: 'live'
-      api: 'mock'
+    development: {
+
     },
 
     // Setup for a production release.
-    PRODUCTION: {
-      api: 'live'
+    production: {
+
     }
   },
 
@@ -45,10 +45,67 @@ export const appConfig = {
 
     // Define the time (in ms) that it takes to toggle the sidebar menu.
     toggleTime: 300
-  }
+  },
+
+  siteID: 'HOKA-US'
 };
 
 /****************************************************
 // Settings for any API data calls made from the app.
 *****************************************************/
-export const apiConfig = {};
+export const apiConfig = {
+  OCAPI: {
+    // Set each type of environment to 'mock' or 'live' to use a live API call
+    // or mock data.
+    environment: {
+      // development: 'mock',
+      development: 'live',
+      qa: 'live',
+      staging: 'live',
+      production: 'live'
+    },
+
+    // Define each possible call type that available.
+    resources: {
+      Baskets: {
+        path: '/baskets',
+        API: 'shop',
+        calls: {
+          create: {
+            path: '',
+            requiredParams: [],
+            requiredData: [],
+            callType: 'GET',
+            headers: {
+              'Content-Type': 'application-json'
+            }
+          }
+        }
+      }
+    },
+    API: {
+      shop: {
+        path: '/shop',
+      },
+      data: {
+        path: '/data',
+      }
+    },
+    // The base URI of the API call endpoint that will be used if the selected environment type
+    // is setup to use the live API.
+    baseEndpoints: {
+      develpment: 'https://dw25-web-deckers.demandware.net/s/' + appConfig.siteID,
+      qa: 'https://dw24-web-deckers.demandware.net/s/' + appConfig.siteID,
+      staging: 'https://staging-web-deckers.demandware.net/s/' + appConfig.siteID,
+      production: 'https://www.hokaoneone.com/dw/'
+    },
+    clientIDs: {
+      development: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      production: '',
+      staging: '',
+      qa: ''
+    },
+    currentVersion: 'v17_8',
+  },
+
+};
