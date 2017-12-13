@@ -67,12 +67,15 @@ export const apiConfig = {
 
     // Define each possible call type that available.
     resources: {
-      Baskets: {
+
+      /* ======  BASKET  ====== */
+      baskets: {
         path: '/baskets',
         API: 'shop',
         calls: {
           create: {
             path: '',
+            pathParams: [],
             requiredParams: [],
             requiredData: [],
             callType: 'GET',
@@ -81,6 +84,20 @@ export const apiConfig = {
             }
           }
         }
+      },
+
+      products: {
+        path: '/products',
+        API: 'shop',
+        calls: {
+          get: {
+            path: '/{0}',
+            pathParams: [{name: 'productID', index: 0}],
+            requiredParams: [],
+            requiredData: []
+          }
+        }
+
       }
     },
     API: {

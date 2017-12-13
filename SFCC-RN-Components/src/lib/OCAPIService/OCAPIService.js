@@ -11,6 +11,7 @@
  */
 
 import { appConfig, apiConfig } from '../../config/appConfig';
+import OCAPICallInfo from './OCAPICallInfo';
 
 let OCAPIServiceInstance = null;
 
@@ -23,13 +24,13 @@ let OCAPIServiceInstance = null;
 export default class OCAPIService {
   constructor() {
     this._isMock = apiConfig.OCAPI.environment[appConfig.instanceType] === 'mock';
-      if (!OCAPIServiceInstance) {
-        OCAPIServiceInstance = this;
-      }
+    if (!OCAPIServiceInstance) {
+      OCAPIServiceInstance = this;
+    }
     return OCAPIServiceInstance;
   }
 
-  /** ========================================================================
+  /*  ========================================================================
    *    Public Class Members
    *  ========================================================================*/
 
@@ -41,16 +42,13 @@ export default class OCAPIService {
    *                                   to make changes to the App's global state data.
    * @param {function} failAction
    * @param {object} [callParams]
-   * @param {object} [callData]
    */
-  makeCall(resourceName, callName, successAction, failAction, callParams, callData) {
-    let callSetup = this._setupCall(resourceName, callName, callParams, callData);
-
-
+  makeCall(resourceName, callName, successAction, failAction, callParams) {
+    let callSetup = this._setupCall(resourceName, callName, callParams);
 
   }
 
-  /** ========================================================================
+  /*  ========================================================================
    *    Private Class Members
    *  ========================================================================*/
 
@@ -59,16 +57,30 @@ export default class OCAPIService {
    * will resolve to the results of the call.
    *
    * @private
-   * @param {string} callName   - An identifier for the API call endpoint of the API request.
-   * @param {object} callParams - An object with a property for each field that
-   *                              should to be included in the request.
-   * @param {object} callData   - An object containing key/value pairs for the data
-   *                              that should be included in the body of the API request.
-   * @return {Promise}          - Returns a Promise that is returned from the
-   *                              fetch call to the API endpoint.
+   * @param {OCAPICallInfo} callData - An instance of the OCAPICallInfo class that contains the concatenated
+   *    endpoint, headers, and body of the request that will be made.
+   * @param {function} successAction - A callback function used to dispatch a Redux action creation method
+   *    to update the application with the results of the successfull API call.
+   * @param {function} failAction    - A callback function used to dispatch a Redux action creation method
+   *    to update the application's state with the API call failure information.
+   * @return {Promise}        - Returns a Promise that is returned from the fetch call to the API endpoint.
    */
-  _fetchData(callName, callParams, callData) {
+  _fetchData(callData, successAction, failAction) {
 
+    // Return the Promise created by the fetch operation.
+    return fetch(callData.endpoint(), {
+        method: callData.httpVerb(),
+        headers: new Headers(callData.headers())
+      })
+      .then(response => response.json())
+      .then(
+        data => successAction(data),
+        err => failAction('ERROR:: APIService.js : makeApiCall() => There was error calling the API.')
+      )
+      .catch((error) => {
+        console.log(error);
+        failAction(error.toString());
+      });
   }
 
   /**
@@ -77,14 +89,12 @@ export default class OCAPIService {
    *
    * @private
    * @param {string} callName   - An identifier for the API call endpoint of the API request.
-   * @param {object} callParams - An object with a property for each field that
-   *                              should to be included in the request.
-   * @param {object} callData   - An object containing key/value pairs for the data
-   *                              that should be included in the body of the API request.
-   * @return {Promise}          - Returns a Promise that is returned from the
-   *                              fetch call to the API endpoint.
+   * @param {object} callParams - An object with a property for each field that should to be included in the request.
+   * @param {object} callData   - An object containing key/value pairs for the data that should be included
+   *    in the body of the API request.
+   * @return {Promise}          - Returns a Promise that is returned from the fetch call to the API endpoint.
    */
-  _fetchMockData(callName, callParams, callData) {
+  _fetchMockData(endpoint, callData) {
     return new Promise(
       (data) => {}, (reason) => {
 
@@ -98,68 +108,92 @@ export default class OCAPIService {
    *
    * @private
    * @param {string} callName
-   * @param {object} callParams
    * @param {object} callData
-   * @return {object}
+   * @return {OCAPICallInfo} - Returns an instance of the OCAPICallInfo class with the attributes
+   *    set to the values needed to make the call to the REST API.
    */
-  _setupCall(resourceName, callName, callParams, callData) {
-    const setupData = {
-      apiCallFunction: this._fetchData,
-      endpoint: '',
-      error: false,
-      errMsg: '',
-      body: {},
-      headers: {}
-    };
+  _setupCall(resourceName, callName, callData) {
+    const setupData = new OCAPICallInfo();
+    let ep = '';
+    let errMsg = 'ERROR in OCAPIService at _setupCall';
 
-    if (this._isMock) {
-      setupData.apiCallFunction = this._fetchMockData;
+    try {
+      const rescSetup = apiConfig.OCAPI.resources[resourceName] || null;
+      const callSetup = rescSetup && rescSetup.calls && rescSetup.calls[callName] ?
+        rescSetup.calls[callName] : null;
+
+      setupData.apiCallFunction(this._isMock ? this._fetchMockData : this._fetchData);
+      setupData.httpVerb(callSetup.callType);
+      setupData.endpoint('');
+      setupData.body({});
+      setupData.headers(callSetup.headers);
+      setupData.error(false);
+      setupData.errMsg('');
+
+      // Set the API to return mock data if setup to use the mock in the apiConfig object.
+      if (this._isMock) {
+        setupData.apiCallFunction(this._fetchMockData);
+      }
+
+      // Setup the URI for making the REST call.
+      if (callSetup) {
+        ep = apiConfig.OCAPI.baseEndpoints[appConfig.instanceType];
+        ep += rescSetup.path;
+        ep += callSetup.path;
+        // Append the client_id field as a URL parameter.
+        ep += ('?client_id=' + apiConfig.OCAPI.clientIDs[appConfig.instanceType]);
+        setupData.endpoint(ep);
+      } else {
+        errMsg += '\nThe requested resource, or resource method was not found:';
+        errMsg += '\nResource: ' + resourceName + '\nCall Name: ' + callName;
+        setupData.error(true);
+        setupData.errMsg(errMsg);
+      }
+
+      // Check for any required url parameters included in the config setup and add
+      // them to the config endpoint string.
+      if (callSetup && callSetup.requiredParams && callSetup.requiredParams.length) {
+        callSetup.requiredParams.forEach(field => {
+          if (!callData[field]) {
+            setupData.error(true);
+            setupData.errMsg(errMsg + '\nRequired call parameter: ' + field + ' is missing.');
+          } else {
+            // Append each query string parameter to the URL
+            setupData.endpoint(setupData.endpoint() + '&' + field + '=' + callData[field]);
+          }
+        });
+      }
+
+      // Check for any required request fields included in the config setup.
+      if (callSetup && callSetup.requiredData && callSetup.requiredData.length) {
+        callSetup.requiredData.forEach(field => {
+          if (!callData[field]) {
+            setupData.error(true);
+            setupData.errMsg(setupData.errMsg() + '\nRequired call data: ' + field + ' is missing.');
+          } else {
+            let bd = setupData.body();
+            bd[field] = callData[field];
+            setupData.body(bd);
+          }
+        });
+      }
+
+      // Check if there are any path parameters and replace the place holder with the value passed in.
+      if (callSetup && callSetup.pathParams && callSetup.pathParams.length) {
+        callSetup.pathParams.forEach(field => {
+          if (!callData[field.name]) {
+            setupData.error = true;
+            setupData.errMsg += '\nRequired path parameter: ' + field.name + ' is missing.';
+          } else {
+            let strReplace = '{' + field.index + '}';
+            setupData.endpoint(setupData.endpoint().replace(strReplace, callData[field.name]));
+          }
+        });
+      }
+    } catch (e) {
+      setupData.error(true);
+      Object.keys(e).forEach(key => { setupData.errMsg(setupData.errMsg() + key + ': ' + e[key]) });
     }
-
-    const rescSetup = apiConfig.OCAPI.resources[resourceName] || {};
-
-    // Get each peace of the OCAPI call path from the config file if it is setup.
-    if (rescSetup && rescSetup.calls && rescSetup.calls[callName]) {
-      setupData.endpoint = apiConfig.OCAPI.baseEndpoints[appConfig.environment];
-      setupData.endpoint += apiConfig.OCAPI.resources[resourceName].path;
-      setupData.endpoint += apiConfig.OCAPI.resources[resourceName].calls[callName].path;
-    } else {
-      setupData.errMsg = 'ERROR in OCAPIService at _setupCall:';
-      setupData.errMsg += '\nThe requested resource, or resource method was not found:';
-      setupData.errMsg += '\nResource: ' + resourceName + '\nCall Name: ' + callName;
-      setupData.error = true;
-    }
-
-    // Check for any required url parameters included in the config setup.
-    if (rescSetup.calls[callName].requiredParams &&
-        rescSetup.calls[callName].requiredParams.length) {
-      rescSetup.calls[callName].requiredParams.forEach(field => {
-        if (!callParams[field]) {
-          setupData.error = true;
-          setupData.errMsg += 'ERROR in OCAPIService at _setupCall:';
-          setupData.errMsg += '\nRequired call parameter: ' + field + ' is missing.';
-        }
-      });
-    }
-
-    // Check for any required request fields included in the config setup.
-    if (rescSetup.calls[callName].requiredData &&
-        rescSetup.calls[callName].requiredData.length) {
-      rescSetup.calls[callName].requiredData.forEach(field => {
-        if (!callData[field]) {
-          setupData.error = true;
-          setupData.errMsg += 'ERROR in OCAPIService at _setupCall:';
-          setupData.errMsg += '\nRequired call data: ' + field + ' is missing.';
-        }
-      });
-    }
-
-    setupData.body = callData || null;
-    setupData.headers = rescSetup.calls[callName].headers;
     return setupData;
-  }
-
-  _checkRequiredFields(requiredParams, requiredFields, callParams, callData) {
-
   }
 }
