@@ -130,19 +130,19 @@ const styles = StyleSheet.create({
   },
 
   headingText: {
-    fontFamily: 'notoserif',
+
     fontSize: 22,
     color: colors.boulder
   },
 
   sectionText: {
-    fontFamily: 'notoserif',
+
     fontSize: 18,
     color: colors.blueLagoon
   },
 
   mainText: {
-    fontFamily: 'notoserif',
+
     fontSize: 30,
     color: colors.boulder,
   },
