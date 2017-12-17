@@ -2,7 +2,7 @@
  * home/index.js
  * Container for the CollegeTools component.
  */
-import { dispatch, connect } from 'react-redux';
+import {connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './Home';
 import * as actions from './actions';
