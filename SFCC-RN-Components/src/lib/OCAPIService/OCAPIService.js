@@ -36,16 +36,14 @@ export default class OCAPIService {
 
   /**
    * makeCall
-   * @param {string} resourceName    - The name of the resource to make an API call against.
-   * @param {string} callName        - A unique identifier for getting the proper endpoint for the API request.
-   * @param {function} successAction - A callback function used to dispatch the Redux action handler
-   *                                   to make changes to the App's global state data.
-   * @param {function} failAction
+   * @param {string} resourceName  - The name of the resource to make an API call against.
+   * @param {string} callName      - A unique identifier for getting the proper endpoint for the API request.
    * @param {object} [callParams]
+   * @return {Promise}             - Returns a promise that represents the fetch call that was made.
    */
-  makeCall(resourceName, callName, successAction, failAction, callParams) {
+  makeCall(resourceName, callName, callParams) {
     let callSetup = this._setupCall(resourceName, callName, callParams);
-
+    return this._fetchData(callSetup);
   }
 
   /*  ========================================================================
@@ -59,18 +57,15 @@ export default class OCAPIService {
    * @private
    * @param {OCAPICallInfo} callData - An instance of the OCAPICallInfo class that contains the concatenated
    *    endpoint, headers, and body of the request that will be made.
-   * @param {function} successAction - A callback function used to dispatch a Redux action creation method
-   *    to update the application with the results of the successfull API call.
-   * @param {function} failAction    - A callback function used to dispatch a Redux action creation method
-   *    to update the application's state with the API call failure information.
-   * @return {Promise}        - Returns a Promise that is returned from the fetch call to the API endpoint.
+   * @return {Promise}               - Returns a Promise that is returned from the fetch call to the API endpoint.
    */
-  _fetchData(callData, successAction, failAction) {
+  _fetchData(callData) {
 
     // Return the Promise created by the fetch operation.
     return fetch(callData.endpoint(), {
         method: callData.httpVerb(),
         headers: new Headers(callData.headers())
+<<<<<<< HEAD
       })
       .then(response => response.json())
       .then(
@@ -80,6 +75,8 @@ export default class OCAPIService {
       .catch((error) => {
         console.log(error);
         failAction(error.toString());
+=======
+>>>>>>> 3bfd627036acec981be9103b16addb5c4f7f30e6
       });
   }
 
@@ -88,13 +85,11 @@ export default class OCAPIService {
    * that was retrieved.
    *
    * @private
-   * @param {string} callName   - An identifier for the API call endpoint of the API request.
-   * @param {object} callParams - An object with a property for each field that should to be included in the request.
    * @param {object} callData   - An object containing key/value pairs for the data that should be included
    *    in the body of the API request.
    * @return {Promise}          - Returns a Promise that is returned from the fetch call to the API endpoint.
    */
-  _fetchMockData(endpoint, callData) {
+  _fetchMockData(callData) {
     return new Promise(
       (data) => {}, (reason) => {
 
