@@ -75,7 +75,7 @@ export default class OCAPIService {
       .then(response => response.json())
       .then(
         data => successAction(data),
-        err => failAction('ERROR:: APIService.js : makeApiCall() => There was error calling the API.')
+        err => failAction('ERROR:: OCAPIService.js : _fetchData() => There was error calling the API.')
       )
       .catch((error) => {
         console.log(error);
