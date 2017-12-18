@@ -65,6 +65,18 @@ export default class OCAPIService {
     return fetch(callData.endpoint(), {
         method: callData.httpVerb(),
         headers: new Headers(callData.headers())
+<<<<<<< HEAD
+      })
+      .then(response => response.json())
+      .then(
+        data => successAction(data),
+        err => failAction('ERROR:: OCAPIService.js : _fetchData() => There was error calling the API.')
+      )
+      .catch((error) => {
+        console.log(error);
+        failAction(error.toString());
+=======
+>>>>>>> 3bfd627036acec981be9103b16addb5c4f7f30e6
       });
   }
 
