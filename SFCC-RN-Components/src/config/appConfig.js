@@ -115,8 +115,8 @@ export const apiConfig = {
     // The base URI of the API call endpoint that will be used if the selected environment type
     // is setup to use the live API.
     baseEndpoints: {
-      development: 'https://dw25-web-deckers.demandware.net/s/' + appConfig.siteID + '/dw/',
-      qa: 'https://qa-web-example.demandware.net/s/dw/' + appConfig.siteID,
+      development: 'https://sandbox1-web-example.demandware.net/s/' + appConfig.siteID + '/dw/',
+      qa: 'https://qa-web-example.demandware.net/s/' + appConfig.siteID + '/dw/',
       staging: 'https://staging-web-example.demandware.net/s/dw/' + appConfig.siteID,
       production: 'https://www.example.com/dw/'
     },
