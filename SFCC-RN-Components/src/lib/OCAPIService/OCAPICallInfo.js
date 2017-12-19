@@ -6,6 +6,9 @@
  */
 export default class OCAPICallInfo {
   /**
+   * Creates an instance of OCAPICallInfo.
+   *
+   * @memberof OCAPICallInfo
    * @constructor
    */
   constructor() {
@@ -22,7 +25,7 @@ export default class OCAPICallInfo {
     /** @type {boolean} */
     this._error = false;
     /** @type {string} */
-    this.errMsg = 'ERROR in OCAPIService at _setupCall';
+    this.errMsg = 'ERROR in OCAPIService at setupCall';
   }
 
   /*  ========================================================================

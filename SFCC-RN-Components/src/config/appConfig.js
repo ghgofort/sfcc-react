@@ -94,7 +94,11 @@ export const apiConfig = {
             path: '/{0}',
             pathParams: [{name: 'productID', index: 0}],
             requiredParams: [],
-            requiredData: []
+            requiredData: [],
+            callType: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
           }
         }
 
@@ -111,9 +115,9 @@ export const apiConfig = {
     // The base URI of the API call endpoint that will be used if the selected environment type
     // is setup to use the live API.
     baseEndpoints: {
-      develpment: 'https://dev-web-example.demandware.net/s/' + appConfig.siteID,
-      qa: 'https://qa-web-example.demandware.net/s/' + appConfig.siteID,
-      staging: 'https://staging-web-example.demandware.net/s/' + appConfig.siteID,
+      development: 'https://dw25-web-deckers.demandware.net/s/' + appConfig.siteID + '/dw/',
+      qa: 'https://qa-web-example.demandware.net/s/dw/' + appConfig.siteID,
+      staging: 'https://staging-web-example.demandware.net/s/dw/' + appConfig.siteID,
       production: 'https://www.example.com/dw/'
     },
     clientIDs: {
@@ -123,6 +127,6 @@ export const apiConfig = {
       qa: ''
     },
     currentVersion: 'v17_8',
-  },
+  }
 
 };
