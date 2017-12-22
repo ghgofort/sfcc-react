@@ -12,6 +12,8 @@ import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Routes from '../../menuItems';
 import NavbarContainer from '../Navbar/NavbarContainer';
+import InfoTileContainer from '../SFCC/Product/InfoTile/InfoTileContainer';
+import InfoTile from '../SFCC/Product/InfoTile/InfoTile';
 
 const screenSize = Dimensions.get('window');
 
@@ -43,7 +45,7 @@ class Home extends Component {
         },
         homeStyles.mainView]}>
         <NavbarContainer key='navbarHome' pageTitle='Home' menuItems={this.state.routes}>
-        <Text>Hello World</Text>
+        <InfoTileContainer key='info'></InfoTileContainer>
         </NavbarContainer>
       </View>
     );

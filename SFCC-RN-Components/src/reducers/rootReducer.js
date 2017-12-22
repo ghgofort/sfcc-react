@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import homeReducer, * as fromHome from './homeReducer';
+import infoTileReducer, * as fromInfoTile from './infoTileReducer';
 
 export default rootReducer = combineReducers({
-  homeReducer
+  homeReducer,
+  infoTileReducer
 });
 
 /**
@@ -13,3 +15,4 @@ export default rootReducer = combineReducers({
  *  export const getNavigation = state => fromNavigation.getNavigation(state.navigationReducer);
  */
 export const getHome = state => fromHome.getHome(state.homeReducer);
+export const getInfoTileProduct = (state) => fromInfoTile.getInfoTileProduct(state.infoTileReducer);

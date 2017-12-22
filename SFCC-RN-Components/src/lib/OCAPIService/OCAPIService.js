@@ -36,113 +36,66 @@ export default class OCAPIService {
 
   /**
    * makeCall
-   * @param {string} resourceName  - The name of the resource to make an API call against.
-   * @param {string} callName      - A unique identifier for getting the proper endpoint for the API request.
-   * @param {object} [callParams]
-   * @return {Promise}             - Returns a promise that represents the fetch call that was made.
+   * @param {OCAPICallInfo} callSetup - An instance of the OCAPICallInfo class.
+   * @return {Promise<any>}           - Returns a Promise that resolves to the requested data.
    */
-  makeCall(resourceName, callName, callParams) {
-    let callSetup = this._setupCall(resourceName, callName, callParams);
+  makeCall(callSetup) {
     return this._fetchData(callSetup);
-  }
-
-  /*  ========================================================================
-   *    Private Class Members
-   *  ========================================================================*/
-
-  /**
-   * Makes a call to the live API to retrieve data, then returns a Promise that
-   * will resolve to the results of the call.
-   *
-   * @private
-   * @param {OCAPICallInfo} callData - An instance of the OCAPICallInfo class that contains the concatenated
-   *    endpoint, headers, and body of the request that will be made.
-   * @return {Promise}               - Returns a Promise that is returned from the fetch call to the API endpoint.
-   */
-  _fetchData(callData) {
-
-    // Return the Promise created by the fetch operation.
-    return fetch(callData.endpoint(), {
-        method: callData.httpVerb(),
-        headers: new Headers(callData.headers())
-<<<<<<< HEAD
-      })
-      .then(response => response.json())
-      .then(
-        data => successAction(data),
-        err => failAction('ERROR:: OCAPIService.js : _fetchData() => There was error calling the API.')
-      )
-      .catch((error) => {
-        console.log(error);
-        failAction(error.toString());
-=======
->>>>>>> 3bfd627036acec981be9103b16addb5c4f7f30e6
-      });
-  }
-
-  /**
-   * Retrieves data from the mockData static file and returns a Promise that resolves to the data
-   * that was retrieved.
-   *
-   * @private
-   * @param {object} callData   - An object containing key/value pairs for the data that should be included
-   *    in the body of the API request.
-   * @return {Promise}          - Returns a Promise that is returned from the fetch call to the API endpoint.
-   */
-  _fetchMockData(callData) {
-    return new Promise(
-      (data) => {}, (reason) => {
-
-      }
-    );
   }
 
   /**
    * Gets the full URI of the API call, and sets up the body of the call and returns this
    * information as key value pairs in an object.
    *
-   * @private
    * @param {string} callName
    * @param {object} callData
    * @return {OCAPICallInfo} - Returns an instance of the OCAPICallInfo class with the attributes
    *    set to the values needed to make the call to the REST API.
    */
-  _setupCall(resourceName, callName, callData) {
+  setupCall(resourceName, callName, callData) {
     const setupData = new OCAPICallInfo();
     let ep = '';
-    let errMsg = 'ERROR in OCAPIService at _setupCall';
+    let errMsg = 'ERROR in OCAPIService at setupCall';
 
     try {
+      console.log('Begin Try block');
       const rescSetup = apiConfig.OCAPI.resources[resourceName] || null;
       const callSetup = rescSetup && rescSetup.calls && rescSetup.calls[callName] ?
         rescSetup.calls[callName] : null;
 
-      setupData.apiCallFunction(this._isMock ? this._fetchMockData : this._fetchData);
-      setupData.httpVerb(callSetup.callType);
-      setupData.endpoint('');
-      setupData.body({});
-      setupData.headers(callSetup.headers);
-      setupData.error(false);
-      setupData.errMsg('');
+      setupData.apiCallFunction = this._isMock ? this._fetchMockData : this._fetchData;
+      setupData.httpVerb = callSetup.callType;
+      setupData.endpoint = '';
+      setupData.body = {};
+      setupData.headers = callSetup.headers;
+      setupData.error = false;
+      setupData.errMsg ='';
 
       // Set the API to return mock data if setup to use the mock in the apiConfig object.
       if (this._isMock) {
-        setupData.apiCallFunction(this._fetchMockData);
+        setupData.apiCallFunction = this._fetchMockData;
       }
 
       // Setup the URI for making the REST call.
       if (callSetup) {
+        // Get the base endpoint from the config file for the configured instance type.
         ep = apiConfig.OCAPI.baseEndpoints[appConfig.instanceType];
+
+        // Append the API path and the API version for this call.
+        ep += apiConfig.OCAPI.API[rescSetup.API].path;
+        ep += '/' + apiConfig.OCAPI.currentVersion;
+        // Append the resource name, and the call name paths.
         ep += rescSetup.path;
         ep += callSetup.path;
+
         // Append the client_id field as a URL parameter.
         ep += ('?client_id=' + apiConfig.OCAPI.clientIDs[appConfig.instanceType]);
-        setupData.endpoint(ep);
+        setupData.endpoint = ep;
       } else {
         errMsg += '\nThe requested resource, or resource method was not found:';
         errMsg += '\nResource: ' + resourceName + '\nCall Name: ' + callName;
-        setupData.error(true);
-        setupData.errMsg(errMsg);
+        setupData.error = true;
+        setupData.errMsg = errMsg;
       }
 
       // Check for any required url parameters included in the config setup and add
@@ -150,11 +103,11 @@ export default class OCAPIService {
       if (callSetup && callSetup.requiredParams && callSetup.requiredParams.length) {
         callSetup.requiredParams.forEach(field => {
           if (!callData[field]) {
-            setupData.error(true);
-            setupData.errMsg(errMsg + '\nRequired call parameter: ' + field + ' is missing.');
+            setupData.error = true;
+            setupData.errMsg = errMsg + '\nRequired call parameter: ' + field + ' is missing.';
           } else {
             // Append each query string parameter to the URL
-            setupData.endpoint(setupData.endpoint() + '&' + field + '=' + callData[field]);
+            setupData.endpoint = setupData.endpoint + '&' + field + '=' + callData[field];
           }
         });
       }
@@ -163,12 +116,12 @@ export default class OCAPIService {
       if (callSetup && callSetup.requiredData && callSetup.requiredData.length) {
         callSetup.requiredData.forEach(field => {
           if (!callData[field]) {
-            setupData.error(true);
-            setupData.errMsg(setupData.errMsg() + '\nRequired call data: ' + field + ' is missing.');
+            setupData.error = true;
+            setupData.errMsg = setupData.errMsg + '\nRequired call data: ' + field + ' is missing.';
           } else {
-            let bd = setupData.body();
+            let bd = setupData.body;
             bd[field] = callData[field];
-            setupData.body(bd);
+            setupData.body = bd;
           }
         });
       }
@@ -181,14 +134,55 @@ export default class OCAPIService {
             setupData.errMsg += '\nRequired path parameter: ' + field.name + ' is missing.';
           } else {
             let strReplace = '{' + field.index + '}';
-            setupData.endpoint(setupData.endpoint().replace(strReplace, callData[field.name]));
+            setupData.endpoint = setupData.endpoint.replace(strReplace, callData[field.name]);
           }
         });
       }
     } catch (e) {
-      setupData.error(true);
-      Object.keys(e).forEach(key => { setupData.errMsg(setupData.errMsg() + key + ': ' + e[key]) });
+      console.log('Exception caught:');
+      console.log(e);
+      setupData.error = true;
+      Object.keys(e).forEach(key => { setupData.errMsg = setupData.errMsg + key + ': ' + e[key] });
     }
     return setupData;
+  }
+
+
+  /*  ========================================================================
+   *    Private Class Members
+   *  ========================================================================*/
+
+  /**
+   * Makes a call to the live API to retrieve data, then returns a Promise that
+   * will resolve to the results of the call.
+   *
+   * @private
+   * @param {OCAPICallInfo} callData - An instance of the OCAPICallInfo class that contains the concatenated
+   *    endpoint, headers, and body of the request that will be made.
+   * @return {Promise<any>}               - Returns a Promise that is returned from the fetch call to the API endpoint.
+   */
+  _fetchData(callData) {
+    // Return the Promise created by the fetch operation.
+    return fetch(callData.endpoint, {
+        method: callData.httpVerb,
+        headers: new Headers(callData.headers)
+      });
+  }
+
+  /**
+   * Retrieves data from the mockData static file and returns a Promise that resolves to the data
+   * that was retrieved.
+   *
+   * @private
+   * @param {OCAPICallInfo} callData - An instance of the OCAPICallInfo class that contains the concatenated
+   *    endpoint, headers, and body of the request that will be made.
+   * @return {Promise<any>}          - Returns a Promise that is returned from the fetch call to the API endpoint.
+   */
+  _fetchMockData(callData) {
+    return new Promise(
+      (data) => {}, (reason) => {
+
+      }
+    );
   }
 }

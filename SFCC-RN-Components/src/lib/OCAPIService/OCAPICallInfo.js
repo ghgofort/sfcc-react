@@ -6,23 +6,26 @@
  */
 export default class OCAPICallInfo {
   /**
+   * Creates an instance of OCAPICallInfo.
+   *
+   * @memberof OCAPICallInfo
    * @constructor
    */
-  constructor() {
+  constructor(args) {
     /** @type {function} */
-    this._apiCallFunction = null;
+    this._apiCallFunction = args && args.apiCallFunction ? args.apiCallFunction : null;
     /** @type {string} */
-    this._httpVerb = '';
+    this._httpVerb = args && args.httpVerb ? args.httpVerb : '';
     /** @type {string} */
-    this._endpoint = '';
+    this._endpoint = args && args.endpoint ? args.endpoint : '';
     /** @type {object} */
-    this._body = {};
+    this._body = args && args.body ? args.body : {};
     /** @type {object} */
-    this._headers = {};
+    this._headers = args && args.headers ? args.headers : {};
     /** @type {boolean} */
-    this._error = false;
+    this._error = args && args.error ? args.error : false;
     /** @type {string} */
-    this.errMsg = 'ERROR in OCAPIService at _setupCall';
+    this._errMsg = args && args.errMsg ? args.errMsg : 'ERROR in OCAPIService at setupCall';
   }
 
   /*  ========================================================================
