@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import Routes from '../../../../menuItems';
 import { connect } from 'react-redux';
 
@@ -36,20 +36,58 @@ class InfoTile extends Component {
     this.props.actions.requestProduct('1012046');
   }
 
-
   render() {
-    return (
-      <View>
-        <Button onPress={this._buttonPressed.bind(this)}
-        title="Push for record"
-        color="#841584"/>
 
-        <Text>
-          {JSON.stringify(this.state.infoTile.product)}
-        </Text>
+    return (
+      <View style={itStyles.container}>
+        <View style={itStyles.buttonContainer}>
+          <Button onPress={this._buttonPressed.bind(this)}
+                  title="Push for record"
+                  color="#841584"
+          />
+        </View>
+        <View style={itStyles.productTitleContainer}>
+          <Text style={itStyles.productTitle}>
+            {this.state.infoTile.product._name}
+          </Text>
+        </View>
+
       </View>
     );
   }
 }
+
+const itStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    backgroundColor: '#ececec'
+  },
+  productTitleContainer: {
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF'
+  },
+  productTitle: {
+    fontSize: 26,
+    textAlign: 'center'
+  },
+  productInfoField: {
+    flex: 1,
+    fontSize: 16,
+    paddingLeft: 5
+  },
+  button: {
+
+  },
+  buttonContainer: {
+    height: 60,
+    justifyContent: 'center',
+    backgroundColor: '#65D0E5',
+    margin: 12,
+    borderWidth: 0,
+    borderRadius: 8,
+    paddingTop: 20,
+    paddingBottom: 20
+  }
+});
 
 export default connect(({ routes }) => ({ routes }))(InfoTile);

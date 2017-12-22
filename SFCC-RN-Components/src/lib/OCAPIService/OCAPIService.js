@@ -76,13 +76,8 @@ export default class OCAPIService {
         setupData.apiCallFunction = this._fetchMockData;
       }
 
-      console.log('Check for Mock API');
-
       // Setup the URI for making the REST call.
       if (callSetup) {
-        console.log('callSetup: \n');
-        console.table(callSetup);
-
         // Get the base endpoint from the config file for the configured instance type.
         ep = apiConfig.OCAPI.baseEndpoints[appConfig.instanceType];
 
@@ -167,8 +162,6 @@ export default class OCAPIService {
    * @return {Promise<any>}               - Returns a Promise that is returned from the fetch call to the API endpoint.
    */
   _fetchData(callData) {
-    console.log('callData');
-    console.table(callData);
     // Return the Promise created by the fetch operation.
     return fetch(callData.endpoint, {
         method: callData.httpVerb,
