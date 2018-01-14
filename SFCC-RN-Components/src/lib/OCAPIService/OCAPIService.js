@@ -58,7 +58,6 @@ export default class OCAPIService {
     let errMsg = 'ERROR in OCAPIService at setupCall';
 
     try {
-      console.log('Begin Try block');
       const rescSetup = apiConfig.OCAPI.resources[resourceName] || null;
       const callSetup = rescSetup && rescSetup.calls && rescSetup.calls[callName] ?
         rescSetup.calls[callName] : null;
@@ -133,8 +132,11 @@ export default class OCAPIService {
             setupData.error = true;
             setupData.errMsg += '\nRequired path parameter: ' + field.name + ' is missing.';
           } else {
+            // If we are getting multiples of a resource, then we turn the array of values into a
+            // comma-seperated list enclosed in parenthasis.
+            let fieldValue = Array.isArray(callData[field.name]) ? '(' + callData[field.name].toString() + ')' : callData[field.name];
             let strReplace = '{' + field.index + '}';
-            setupData.endpoint = setupData.endpoint.replace(strReplace, callData[field.name]);
+            setupData.endpoint = setupData.endpoint.replace(strReplace, fieldValue);
           }
         });
       }
