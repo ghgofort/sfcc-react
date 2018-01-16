@@ -99,6 +99,16 @@ export const apiConfig = {
             headers: {
               'Content-Type': 'application/json'
             }
+          },
+          images: {
+            path: '/{0}/images',
+            pathParams: [{name: 'productID', index: 0}],
+            requiredParams: ['all_images'],
+            requiredData: [],
+            callType: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
           }
         }
 

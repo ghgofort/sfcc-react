@@ -1,6 +1,12 @@
+/**
+ * @file Image.js
+ * Class file for an OCAPI Image document.
+ */
 
-
-export default class ProductImage {
+ /**
+  * @class Image
+  */
+export default class Image {
   /**
    *
    * @param {Object} [args] - An optional argument object with properties to match the response
@@ -19,9 +25,14 @@ export default class ProductImage {
     this._link = args && args.link ? args.link : '';
     /** @type {string} */
     this._title = args && args.title ? args.title : '';
-    // "alt": "Tracer 2",
-    // "dis_base_link": "https://sits-pod52.demandware.net/dw/image/v2/AAFF_S25/on/demandware.static/-/Sites-masterCatalogHoka/default/v1514346396403/images/white/1016786-CCYN_1.jpg",
-    // "link": "https://dw25-web-deckers.demandware.net/on/demandware.static/-/Sites-masterCatalogHoka/default/v1514346396403/images/white/1016786-CCYN_1.jpg",
-    // "title": "Tracer 2"
   }
+
+  get link() {return this._link}
+  set link(value) {this._link = value}
+  get disBaseLink() {return this._disBaseLink}
+  set disBaseLink(value) {this._disBaseLink = value}
+  get title() {return this._title}
+  set title(value) {this._title = value}
+  get alt() {return this._alt}
+  set alt(value) {this._alt = value}
 }

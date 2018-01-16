@@ -7,14 +7,16 @@
 import {connect} from 'react-redux';
 import * as actionCreators from './actions'
 import {bindActionCreators} from 'redux';
-import {getInfoTileProduct} from '../../../../reducers/rootReducer';
+import {getInfoTileProduct, getImageURL} from '../../../../reducers/rootReducer';
 import InfoTile from './InfoTile';
 
 const mapStateToProps = state => {
   return {
     infoTile: {
-      product: getInfoTileProduct(state)
-    }
+      product: getInfoTileProduct(state),
+      imageURL: getImageURL(state)
+    },
+
   };
 };
 

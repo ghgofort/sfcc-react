@@ -16,3 +16,4 @@ export default rootReducer = combineReducers({
  */
 export const getHome = state => fromHome.getHome(state.homeReducer);
 export const getInfoTileProduct = (state) => fromInfoTile.getInfoTileProduct(state.infoTileReducer);
+export const getImageURL = (state) => fromInfoTile.getImageURL(state.infoTileReducer);
