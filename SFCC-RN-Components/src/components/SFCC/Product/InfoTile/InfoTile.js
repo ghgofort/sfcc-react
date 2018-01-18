@@ -1,5 +1,5 @@
 /**
- * InfoTile.js
+ * @file InfoTile.js
  * An InfoTile instance is a visual componenet that represnts a product from a SFCC instance.
  */
 
@@ -8,6 +8,11 @@ import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import Routes from '../../../../menuItems';
 import { connect } from 'react-redux';
 
+/**
+ * @class
+ * @name InfoTile
+ * @desc - React Native component that displays basic product information from a SFCC instance.
+ */
 class InfoTile extends Component {
   constructor(props) {
     super(props);

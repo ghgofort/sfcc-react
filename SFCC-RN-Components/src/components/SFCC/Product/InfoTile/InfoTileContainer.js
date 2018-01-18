@@ -1,5 +1,5 @@
 /**
- * InfoFileContainer.js
+ * @file InfoFileContainer.js
  * A container component for the Product/InfoTile component which displays product
  * information from and SFCC instance.
  */
