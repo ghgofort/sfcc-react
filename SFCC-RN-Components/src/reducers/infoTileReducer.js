@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
   isLoadingProduct: false,
   isLoadingProductImages: false,
   infoTile: {
-    product: {}
+    product: (new Product())
   }
 };
 
