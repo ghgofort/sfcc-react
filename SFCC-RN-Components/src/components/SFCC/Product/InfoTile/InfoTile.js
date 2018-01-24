@@ -43,8 +43,15 @@ class InfoTile extends Component {
     this.props.actions.requestImagesForProduct('1016786');
   }
 
+  _setImageSrc() {
+    if (this.state.infoTile.imgURL && this.state.infoTile.imgURL !== '') {
+      return {uri: this.state.infoTile.imgURL};
+    } else {
+      return require('../../../../../assets/images/missing_img.png');
+    }
+  }
+
   render() {
-    let iSrc = '';
     const prod = this.state.infoTile.product;
 
     if (
@@ -57,7 +64,8 @@ class InfoTile extends Component {
       console.log(iSrc);
     }
 
-    const srcObj = {uri: iSrc};
+    const srcObj = this._setImageSrc();
+    console.log(srcObj);
 
     return (
       <View style={itStyles.container}>
@@ -73,7 +81,7 @@ class InfoTile extends Component {
           </Text>
         </View>
         <View style={itStyles.productTitleContainer}>
-          <Text>{iSrc}</Text>
+          <Text>Image</Text>
           <Image
             source={srcObj}
             style={{width: 400, height: 400}}
