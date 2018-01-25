@@ -1,19 +1,20 @@
 /**
- * InfoFileContainer.js
+ * @file InfoFileContainer.js
  * A container component for the Product/InfoTile component which displays product
  * information from and SFCC instance.
  */
 
 import {connect} from 'react-redux';
-import * as actionCreators from './actions'
+import * as actionCreators from './actions';
 import {bindActionCreators} from 'redux';
-import {getInfoTileProduct} from '../../../../reducers/rootReducer';
+import {getInfoTileProduct, getImageURL} from '../../../../reducers/rootReducer';
 import InfoTile from './InfoTile';
 
 const mapStateToProps = state => {
   return {
     infoTile: {
-      product: getInfoTileProduct(state)
+      product: getInfoTileProduct(state),
+      imageURL: getImageURL(state)
     }
   };
 };

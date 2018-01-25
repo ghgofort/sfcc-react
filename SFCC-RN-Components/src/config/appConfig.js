@@ -1,7 +1,11 @@
 /**
- * appConfig.js
+ * @file appConfig.js
  * Defines application configuration settings and provides helper functions for
  * easily getting the needed information.
+ *
+ * @todo - Move all connection and client ID information into another file that
+ *         is not part of the GIT repo, and provide docs on setting the configs
+ *         up.
  */
 
 /****************************************************
@@ -24,7 +28,9 @@ export const appConfig = {
 
     // Setup for app development.
     development: {
-
+      // This can be set to override the initial path to images that is returned
+      // by OCAPI api calls for product images.
+      productImageBaseURL: 'https://sits-pod52.demandware.net/dw/image/v2/AAFF_STG/on/demandware.static/'
     },
 
     // Setup for a production release.
@@ -94,6 +100,16 @@ export const apiConfig = {
             path: '/{0}',
             pathParams: [{name: 'productID', index: 0}],
             requiredParams: [],
+            requiredData: [],
+            callType: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          },
+          images: {
+            path: '/{0}/images',
+            pathParams: [{name: 'productID', index: 0}],
+            requiredParams: ['all_images'],
             requiredData: [],
             callType: 'GET',
             headers: {
