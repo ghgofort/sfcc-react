@@ -30,7 +30,13 @@ export const appConfig = {
     development: {
       // This can be set to override the initial path to images that is returned
       // by OCAPI api calls for product images.
-      productImageBaseURL: 'https://sits-pod52.demandware.net/dw/image/v2/AAFF_STG/on/demandware.static/'
+      overrides: {
+        productImage: {
+          isOverride: true,
+          pathToReplace: '/AAFF_S25/',
+          pathReplacement: '/AAFF_STG/'
+        }
+      }
     },
 
     // Setup for a production release.

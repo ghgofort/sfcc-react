@@ -7,6 +7,7 @@
 import * as actionTypes from '../actionTypes';
 import ImageGroup from '../lib/documents/ImageGroup';
 import Product from '../lib/documents/Product';
+import URLHelper from '../lib/utilityHelpers/URLHelper';
 
 const DEFAULT_STATE = {
   sceneTransistion: false,
@@ -66,7 +67,7 @@ export const getInfoTileProduct = (state) => {
 
 export const getImageURL = (state) => {
   if (state.infoTile.product.imageGroups.length) {
-    return state.infoTile.product.imageGroups[0].images[0].link;
+    return state.infoTile.product.imageGroups[0].images[0].disBaseLink;
   } else {
     return '';
   }
@@ -83,8 +84,17 @@ export const getImageURL = (state) => {
  *    properties appended.
  */
 function addImagesToState(product, infoTileProduct) {
-  console.log('Hello there ??');
-  console.log(infoTileProduct);
+  const URL_TYPE = 'productImage';
+  // Check if there is an override for Image URLs
+  if (URLHelper.needsOverride(URL_TYPE)) {
+    if (product.imageGroups && product.imageGroups.length) {
+      product.imageGroups.forEach((ig) => {
+        ig.images.forEach((img) => {
+          img.disBaseLink = URLHelper.updateURL(img.disBaseLink, URL_TYPE);
+        });
+      });
+    }
+  }
   // If there is not currently a product in the app state, then we can just return
   // the product that was returned from the API call.
   if (!infoTileProduct) {

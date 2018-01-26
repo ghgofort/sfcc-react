@@ -60,7 +60,7 @@ class InfoTile extends Component {
       prod.imageGroups[0].images.length &&
       prod.imageGroups[0].images[0].link
     ) {
-      iSrc = prod.imageGroups[0].images[0].link;
+      iSrc = prod.imageGroups[0].images[0].disBaseLink;
       console.log(iSrc);
     }
 
@@ -83,6 +83,7 @@ class InfoTile extends Component {
         <View style={itStyles.productTitleContainer}>
           <Text>Image</Text>
           <Image
+            key={this.state.infoTile.imgURL}
             source={srcObj}
             style={{width: 400, height: 400}}
           />
