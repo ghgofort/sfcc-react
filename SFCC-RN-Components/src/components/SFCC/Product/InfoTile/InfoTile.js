@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Dimensions } from 'react-native';
 import Routes from '../../../../menuItems';
 import { connect } from 'react-redux';
 
@@ -16,23 +16,22 @@ import { connect } from 'react-redux';
 class InfoTile extends Component {
   constructor(props) {
     super(props);
+    const screenSize = Dimensions.get('window');
     this.props = props;
     this.state = {
-      infoTile: {
-        product: {
-          id: 'test'
-        },
-        imageURL: ''
-      }
+      product: {
+        id: 'test'
+      },
+      imageURL: '',
+      height: props.height ? props.height : screenSize.height - 46,
+      width: props.width ? props.width : screenSize.width
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState((prevState, nextProps) => ({
-      infoTile: {
-        product: nextProps.infoTile.product,
-        imgURL: nextProps.infoTile.imageURL
-      }
+      product: nextProps.infoTile.product,
+      imgURL: nextProps.infoTile.imageURL
     }));
   }
 
@@ -44,31 +43,22 @@ class InfoTile extends Component {
   }
 
   _setImageSrc() {
-    if (this.state.infoTile.imgURL && this.state.infoTile.imgURL !== '') {
-      return {uri: this.state.infoTile.imgURL};
+    if (this.state.imgURL && this.state.imgURL !== '') {
+      return {uri: this.state.imgURL};
     } else {
       return require('../../../../../assets/images/missing_img.png');
     }
   }
 
   render() {
-    const prod = this.state.infoTile.product;
-
-    if (
-      prod.imageGroups &&
-      prod.imageGroups.length &&
-      prod.imageGroups[0].images.length &&
-      prod.imageGroups[0].images[0].link
-    ) {
-      iSrc = prod.imageGroups[0].images[0].link;
-      console.log(iSrc);
-    }
-
     const srcObj = this._setImageSrc();
-    console.log(srcObj);
+    console.log('height:' + this.state.height);
 
     return (
-      <View style={itStyles.container}>
+      <View style={itStyles.container, {
+        width: this.state.width,
+        height: this.state.height
+      }}>
         <View style={itStyles.buttonContainer}>
           <Button onPress={this._buttonPressed.bind(this)}
                   title="Push for record"
@@ -77,15 +67,26 @@ class InfoTile extends Component {
         </View>
         <View style={itStyles.productTitleContainer}>
           <Text style={itStyles.productTitle}>
-            {this.state.infoTile.product._name}
+            {this.state.product.name}
           </Text>
         </View>
-        <View style={itStyles.productTitleContainer}>
-          <Text>Image</Text>
+        <View style={itStyles.productImageContainer}>
           <Image
+            key={this.state.imgURL}
             source={srcObj}
-            style={{width: 400, height: 400}}
+            resizeMode='contain'
+            style={{
+              width: undefined,
+              height: undefined,
+              flex: 1,
+              alignSelf: 'stretch'
+            }}
           />
+        </View>
+        <View style={itStyles.productDetailsContainer}>
+          <Text style={itStyles.productInfoField}>
+            {this.state.product.shortDescription}
+          </Text>
         </View>
 
       </View>
@@ -95,12 +96,22 @@ class InfoTile extends Component {
 
 const itStyles = StyleSheet.create({
   container: {
+    justifyContent: 'space-between',
     flexDirection: 'column',
     backgroundColor: '#ececec'
   },
   productTitleContainer: {
+    flex: 0.35,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF'
+    alignItems: 'center'
+  },
+  productImageContainer: {
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    padding: 10
   },
   productTitle: {
     fontSize: 26,
@@ -115,6 +126,7 @@ const itStyles = StyleSheet.create({
 
   },
   buttonContainer: {
+    flex: .3,
     height: 60,
     justifyContent: 'center',
     backgroundColor: '#65D0E5',
@@ -123,6 +135,9 @@ const itStyles = StyleSheet.create({
     borderRadius: 8,
     paddingTop: 20,
     paddingBottom: 20
+  },
+  productDetailsContainer: {
+    flex: 2
   }
 });
 

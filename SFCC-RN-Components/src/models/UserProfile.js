@@ -11,7 +11,7 @@ export default class UserProfile {
   constructor(params) {
     // Ititiate any parameter fields that were passed to the constructor.
     this.address = {
-      city: params && params.firstName ? params.firstName : '',
+      city: params && params.city ? params.city : '',
       state: params && params.state ? params.state : '',
     }
     this.fName = params && params.firstName ? params.firstName : '';
@@ -21,12 +21,12 @@ export default class UserProfile {
   }
 
   // User home city.
-  getCity() {return this.city;}
-  setCity(city) {this.city = city;}
+  get city() {return this.city;}
+  set city(city) {this.city = city;}
   // User first name
-  getFName() {return this.firstName;}
-  setFName(fName) {this.firstName = fName;}
+  get firstName() {return this.fName;}
+  set firstName(firstName) {this.fName = firstName;}
   // Last name
-  getLName() {return this.lastName;}
-  setLName(lName) {this.lastName = lName;}
+  get lastName() {return this.lName;}
+  set lastName(lastName) {this.lName = lastName;}
 }

@@ -45,7 +45,7 @@ class Home extends Component {
         },
         homeStyles.mainView]}>
         <NavbarContainer key='navbarHome' pageTitle='Home' menuItems={this.state.routes}>
-        <InfoTileContainer key='info'></InfoTileContainer>
+        <InfoTileContainer key='info' height={this.state.height - 46} width={this.state.width}></InfoTileContainer>
         </NavbarContainer>
       </View>
     );

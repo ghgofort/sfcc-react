@@ -9,6 +9,11 @@ const mapStateToProps = state => {
      * @todo - Map any changes in state to the nextProps parameter in the
      * 'ComponentWillRecieveProps' method of the ThumbnailImage component.
      */
+    src: {},
+    title: {},
+    alt: {},
+    isActive: {},
+    isDisabled: {}
   };
 };
 
