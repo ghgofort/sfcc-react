@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
   isEdit: false,
   isLoadingProfile: false,
   isSavingProfile: false,
-  userProfile: {new UserProfile()},
+  userProfile: (new UserProfile()),
   profileLoadError: {},
   profileSaveError: {}
 };

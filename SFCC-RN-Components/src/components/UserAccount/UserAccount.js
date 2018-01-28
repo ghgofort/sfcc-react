@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import SectionCard from '../Layout/SectionCard'
 import { colors } from '../../styles/globalStyles';
 import Navbar from '../Navbar/Navbar';
+import UserProfile from '../../models/UserProfile';
 
 class UserAccount extends Component {
 
@@ -16,7 +17,7 @@ class UserAccount extends Component {
       menuItems: Routes,
       width: screenSize.width,
       height: screenSize.height,
-      userProfile: props.student,
+      userProfile: props.userProfile || (new UserProfile()),
       isEdit: props.isEdit || false
     }
   }
@@ -29,7 +30,7 @@ class UserAccount extends Component {
    */
   componentWillReceiveProps(nextProps) {
     this.setState((prevState, nextProps) => ({
-      //student: nextProps.student,
+      userProfile: nextProps.userProfile,
       isEdit: nextProps.isEdit,
       isLoadingProfile: nextProps.isLoadingProfile,
       isSavingProfile: nextProps.isSavingProfile,
@@ -48,62 +49,44 @@ class UserAccount extends Component {
             <View style={[{justifyContent: 'center'}, {marginBottom: 10}]}>
               <Image
                 style={{width: 100, height: 100}}
-                source={require('../../../assets/images/static/images/user_icon.png')}>
+                source={require('../../../assets/images/user_icon.png')}>
               </Image>
             </View>
             <View style={[{paddingLeft: 15}, {paddingBottom: 15}]}>
               <Text style={styles.mainText}>
-                {this.state.student.firstName} {this.state.student.lastName}
+                {this.state.userProfile.firstName} {this.state.userProfile.lastName}
               </Text>
-              <Text style={styles.sectionText}>{this.state.student.userName}</Text>
+              <Text style={styles.sectionText}>{this.state.userProfile.userName}</Text>
               <Text style={styles.sectionText}>
-                {this.state.student.address.city}{', '}{this.state.student.address.state}
+                {this.state.userProfile.address.city}{', '}{this.state.userProfile.address.state}
               </Text>
             </View>
           </View>
 
           <View style={[styles.sectionStyle, {flex: 0.15}]}>
             <Text style={styles.headingText}>
-              GPA
+              Account Information
             </Text>
             <Text style={styles.sectionText}>
-              {this.state.student.gpa? this.state.student.gpa : 'not available'}
+
             </Text>
           </View>
 
           <View style={[styles.sectionStyle, {flex: 0.15}]}>
             <Text style={styles.headingText}>
-              Standardized Test Scores
+              Loyalty Information
             </Text>
             <Text style={styles.sectionText}>
-              {this.state.student.testScores? this.state.student.testScores : 'not available'}
+
             </Text>
           </View>
 
           <View style={[styles.sectionStyle, {flex: 0.15}]}>
             <Text style={styles.headingText}>
-              Personal Background
+              Security Information
             </Text>
             <Text style={styles.sectionText}>
-              {this.state.student.background? this.state.student.background : 'not available'}
-            </Text>
-          </View>
 
-          <View style={[styles.sectionStyle, {flex: 0.15}]}>
-            <Text style={styles.headingText}>
-              Education & Academic Interests
-            </Text>
-            <Text style={styles.sectionText}>
-              {this.state.student.interest? this.state.student.interests : 'not available'}
-            </Text>
-          </View>
-
-          <View style={[styles.sectionStyle, {flex: 0.15}]}>
-            <Text style={styles.headingText}>
-              College Majors
-            </Text>
-            <Text style={styles.sectionText}>
-              {this.state.student.majors? this.state.student.majors : 'not available'}
             </Text>
           </View>
 

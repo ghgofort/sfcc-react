@@ -3,7 +3,7 @@
  * Container component for handling lifecycle events for the component lifecycle,
  * and connecting the component to the application state.
  */
-import { dispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from './actions';
 import UserAccount from './UserAccount';
@@ -22,9 +22,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-      actions: bindActionCreators(actionCreators, dispatch)
-    };
+  return {
+    actions: bindActionCreators(actionCreators, dispatch)
+  };
 }
 
 const UserAccountContainer = connect(

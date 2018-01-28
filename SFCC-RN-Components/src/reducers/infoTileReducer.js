@@ -84,6 +84,7 @@ export const getImageURL = (state) => {
  *    properties appended.
  */
 function addImagesToState(product, infoTileProduct) {
+  console.log(product);
   const URL_TYPE = 'productImage';
   // Check if there is an override for Image URLs
   if (URLHelper.needsOverride(URL_TYPE)) {
@@ -97,7 +98,7 @@ function addImagesToState(product, infoTileProduct) {
   }
   // If there is not currently a product in the app state, then we can just return
   // the product that was returned from the API call.
-  if (!infoTileProduct) {
+  if (!infoTileProduct || !infoTileProduct.ID) {
     return product;
   }
 
@@ -105,7 +106,7 @@ function addImagesToState(product, infoTileProduct) {
       (!infoTileProduct.imageGroups || infoTileProduct.imageGroups.length < 1)) {
     infoTileProduct.imageGroups = product.imageGroups;
   }
-
+  console.log(infoTileProduct);
   return infoTileProduct;
 };
 

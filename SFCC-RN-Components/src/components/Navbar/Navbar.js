@@ -161,8 +161,7 @@ class Navbar extends Component {
   }
 
   _updateProfile() {
-    Actions['studentProfile'].apply();
-
+    Actions['userAccount'].apply();
   }
 
   /**

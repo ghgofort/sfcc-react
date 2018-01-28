@@ -4,10 +4,10 @@
  * information from and SFCC instance.
  */
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actionCreators from './actions';
-import {bindActionCreators} from 'redux';
-import {getInfoTileProduct, getImageURL} from '../../../../reducers/rootReducer';
+import { bindActionCreators } from 'redux';
+import { getInfoTileProduct, getImageURL } from '../../../../reducers/rootReducer';
 import InfoTile from './InfoTile';
 
 const mapStateToProps = state => {
