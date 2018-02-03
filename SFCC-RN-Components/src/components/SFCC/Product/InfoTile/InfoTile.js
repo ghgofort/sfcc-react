@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, Image, Dimensions } from 'react-native';
 import Routes from '../../../../menuItems';
 import { connect } from 'react-redux';
+import ThumbnailImage from '../../../ImageCarousel/ThumbnailImage';
 
 /**
  * @class
@@ -20,7 +21,12 @@ class InfoTile extends Component {
     this.props = props;
     this.state = {
       product: {
-        id: 'test'
+        id: 'test',
+        imageGroups: [
+          {
+            images: []
+          }
+        ]
       },
       imageURL: '',
       height: props.height ? props.height : screenSize.height - 46,
@@ -50,9 +56,30 @@ class InfoTile extends Component {
     }
   }
 
+  _thumbnailsSelected() {
+    console.log('Thumbnail Selected');
+  }
+
+  _getThumbnails() {
+    const thumbs = (this.state.product.imageGroups.length &&
+      this.state.product.imageGroups[0].images.length) ?
+      this.state.product.imageGroups[0].images.map((img) =>
+      <ThumbnailImage
+        key={img.disBaseLink}
+        src={{uri:img.disBaseLink}}
+        thumbnailSelected={this._thumbnailsSelected.bind(this)}
+      />) : <View></View>;
+
+    console.log(thumbs.length);
+
+
+    return (thumbs);
+  }
+
   render() {
     const srcObj = this._setImageSrc();
-    console.log('height:' + this.state.height);
+    const thumbnails = this._getThumbnails();
+    console.log(thumbnails);
 
     return (
       <View style={itStyles.container, {
@@ -83,6 +110,9 @@ class InfoTile extends Component {
             }}
           />
         </View>
+        <View style={itStyles.productThumbsContainer}>
+          {thumbnails}
+        </View>
         <View style={itStyles.productDetailsContainer}>
           <Text style={itStyles.productInfoField}>
             {this.state.product.shortDescription}
@@ -112,6 +142,11 @@ const itStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     padding: 10
+  },
+  productThumbsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#000000'
   },
   productTitle: {
     fontSize: 26,
