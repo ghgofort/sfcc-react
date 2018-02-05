@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Dimensions, FlatList } from 'react-native';
 import Routes from '../../../../menuItems';
 import { connect } from 'react-redux';
 import ThumbnailImage from '../../../ImageCarousel/ThumbnailImage';
@@ -19,6 +19,8 @@ class InfoTile extends Component {
     super(props);
     const screenSize = Dimensions.get('window');
     this.props = props;
+    this.height = props.height ? props.height : screenSize.height - 46;
+    this.width = props.width ? props.width : screenSize.width;
     this.state = {
       product: {
         id: 'test',
@@ -28,14 +30,14 @@ class InfoTile extends Component {
           }
         ]
       },
-      imageURL: '',
-      height: props.height ? props.height : screenSize.height - 46,
-      width: props.width ? props.width : screenSize.width
+      imgURL: '',
+      imageIndex: 0
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState((prevState, nextProps) => ({
+      ...prevState,
       product: nextProps.infoTile.product,
       imgURL: nextProps.infoTile.imageURL
     }));
@@ -56,22 +58,36 @@ class InfoTile extends Component {
     }
   }
 
-  _thumbnailsSelected() {
-    console.log('Thumbnail Selected');
+  _thumbnailsSelected(item) {
+    this.setState((prevState) => ({
+      ...prevState,
+      imgURL: item.disBaseLink
+    }));
   }
 
+  /**
+   * Returns an array of ThumbnailImage stateless components for the current
+   * ImageGroup images, or an empty View component if there are not any ImageGroups
+   * in the current component state's 'product' property.
+   * @return {ThumbnailImage[]|View}
+   */
   _getThumbnails() {
     const thumbs = (this.state.product.imageGroups.length &&
-      this.state.product.imageGroups[0].images.length) ?
-      this.state.product.imageGroups[0].images.map((img) =>
-      <ThumbnailImage
-        key={img.disBaseLink}
-        src={{uri:img.disBaseLink}}
-        thumbnailSelected={this._thumbnailsSelected.bind(this)}
-      />) : <View></View>;
-
-    console.log(thumbs.length);
-
+      this.state.product.imageGroups[this.state.imageIndex].images.length) ?
+      <FlatList
+        data={this.state.product.imageGroups[this.state.imageIndex].images}
+        keyExtractor={(item) => item.disBaseLink}
+        horizontal={true}
+        renderItem={({item}) => (
+          <ThumbnailImage
+            key={item.disBaseLink}
+            src={{uri: item.disBaseLink}}
+            thumbnailSelected={() => this._thumbnailsSelected(item)}
+            viewStyle={itStyles.productThumbView}
+            imgStyle={itStyles.productThumbImg}
+          />
+        )}
+      /> : (<View></View>);
 
     return (thumbs);
   }
@@ -79,12 +95,11 @@ class InfoTile extends Component {
   render() {
     const srcObj = this._setImageSrc();
     const thumbnails = this._getThumbnails();
-    console.log(thumbnails);
 
     return (
       <View style={itStyles.container, {
-        width: this.state.width,
-        height: this.state.height
+        width: this.width,
+        height: this.height
       }}>
         <View style={itStyles.buttonContainer}>
           <Button onPress={this._buttonPressed.bind(this)}
@@ -147,6 +162,17 @@ const itStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#000000'
+  },
+  productThumbView: {
+    width: 95,
+    height: 75,
+    alignItems: 'stretch',
+    padding: 5
+  },
+  productThumbImg: {
+    width: 88,
+    height: 65,
+    alignSelf: 'stretch'
   },
   productTitle: {
     fontSize: 26,
