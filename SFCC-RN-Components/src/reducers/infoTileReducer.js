@@ -1,7 +1,7 @@
 /**
- * infoTileReducer.js
- * Reduces the state changes from InfoTile class API calls and merges them into the
- * app global state.
+ * @file infoTileReducer.js
+ * @desc Reduces the state changes from InfoTile class API calls and merges them
+ * into the app global state.
  */
 
 import * as actionTypes from '../actionTypes';
@@ -9,7 +9,7 @@ import ImageGroup from '../lib/documents/ImageGroup';
 import Product from '../lib/documents/Product';
 import URLHelper from '../lib/utilityHelpers/URLHelper';
 
-const DEFAULT_STATE = {
+const initialState = {
   sceneTransistion: false,
   isLoadingProduct: false,
   isLoadingProductImages: false,
@@ -18,7 +18,7 @@ const DEFAULT_STATE = {
   }
 };
 
-export default function(state = DEFAULT_STATE, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     // Product -- Get
     case actionTypes.REQUEST_RESOURCE_PRODUCT_BY_ID:
@@ -29,11 +29,16 @@ export default function(state = DEFAULT_STATE, action) {
     case actionTypes.RECEIVED_RESOURCE_PRODUCT_BY_ID:
       return {
         ...state,
+        isLoadingProduct: false,
         infoTile: {
-          product: action.product,
-          isLoadingProduct: false
+          product: action.product
         }
       };
+    case actionTypes.FAILED_RESOURCE_PRODUCT_BY_ID:
+      return {
+        ...state,
+        isLoadingProduct: false
+      }
 
     // Product -- Images
     case actionTypes.REQUEST_RESOURCE_PRODUCT_IMAGES:
@@ -49,10 +54,15 @@ export default function(state = DEFAULT_STATE, action) {
         isLoadingProductImages: false
        }
      };
+    case actionTypes.FAILED_RESOURCE_PRODUCT_IMAGES:
+    return {
+      ...state,
+      isLoadingProductImages: false
+    };
     default:
       return state;
   }
-}
+};
 
 // Selectors
 

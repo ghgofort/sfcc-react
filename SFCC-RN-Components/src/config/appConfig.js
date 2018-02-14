@@ -45,9 +45,9 @@ export const appConfig = {
     }
   },
 
-/****************************************************
-// Settings for UI settings.
-*****************************************************/
+  /****************************************************
+  // Settings for UI settings.
+  *****************************************************/
 
   // Configuration settings for the navbar menu in the expanded state.
   sidebar: {
@@ -104,7 +104,7 @@ export const apiConfig = {
         calls: {
           get: {
             path: '/{0}',
-            pathParams: [{name: 'productID', index: 0}],
+            pathParams: [{ name: 'productID', index: 0 }],
             requiredParams: [],
             requiredData: [],
             callType: 'GET',
@@ -114,7 +114,7 @@ export const apiConfig = {
           },
           images: {
             path: '/{0}/images',
-            pathParams: [{name: 'productID', index: 0}],
+            pathParams: [{ name: 'productID', index: 0 }],
             requiredParams: ['all_images'],
             requiredData: [],
             callType: 'GET',
@@ -123,7 +123,22 @@ export const apiConfig = {
             }
           }
         }
-
+      },
+      catagories: {
+        path: '/catagories',
+        API: 'shop',
+        calls: {
+          get: {
+            path: '/{0}',
+            pathParams: [{ name: 'catagoryID', index: 0 }],
+            requiredParams: [],
+            requiredData: [],
+            callType: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        }
       }
     },
     API: {
