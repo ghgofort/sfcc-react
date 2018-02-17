@@ -32,6 +32,10 @@ export const appConfig = {
       // by OCAPI api calls for product images.
       overrides: {
         productImage: {
+          /**
+           * @todo : Refactor to get rid of the isOverride property since there
+           * is already null checking.
+           */
           isOverride: true,
           pathToReplace: '/AAFF_S25/',
           pathReplacement: '/AAFF_STG/'
