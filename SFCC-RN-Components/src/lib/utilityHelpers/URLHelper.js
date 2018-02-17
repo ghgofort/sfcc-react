@@ -26,13 +26,11 @@ export default class URLHelper {
 
     // Check that all of the required fields for overriding a portion of the URI path
     // are setup in the appConfig.js for the URL type.
-    if (appConfig.environment[appConfig.instanceType].overrides &&
-        appConfig.environment[appConfig.instanceType].overrides[urlType] &&
-        appConfig.environment[appConfig.instanceType].overrides[urlType].isOverride &&
-        appConfig.environment[appConfig.instanceType].overrides[urlType].pathToReplace &&
-        appConfig.environment[appConfig.instanceType].overrides[urlType].pathReplacement) {
-      // Get the needed config values.
+    if (URLHelper.needsOverride(urlType)) {
+      // Get the override config values.
       const orConfig = appConfig.environment[appConfig.instanceType].overrides[urlType];
+      // Get the text pattern or portion of text to be replaced.
+      /** @todo: Add Regex support for URL mapping. Just static string replacement for now :( */
       const replaceText = orConfig.pathToReplace;
       const replacementText = orConfig.pathReplacement;
       updatedURL = url.replace(replaceText, replacementText);
@@ -50,11 +48,12 @@ export default class URLHelper {
    *    Valid URL types: {'productImage'}
    */
   static needsOverride(urlType) {
-    return (appConfig.environment[appConfig.instanceType].overrides &&
-      appConfig.environment[appConfig.instanceType].overrides[urlType] &&
-      appConfig.environment[appConfig.instanceType].overrides[urlType].isOverride &&
-      appConfig.environment[appConfig.instanceType].overrides[urlType].pathToReplace &&
-      appConfig.environment[appConfig.instanceType].overrides[urlType].pathReplacement);
+    const envConfig = appConfig.environment[appConfig.instanceType];
+    return (envConfig.overrides &&
+      envConfig.overrides[urlType] &&
+      envConfig.overrides[urlType].isOverride &&
+      envConfig.overrides[urlType].pathToReplace &&
+      envConfig.overrides[urlType].pathReplacement);
   }
 
 }

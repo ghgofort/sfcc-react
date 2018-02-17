@@ -1,6 +1,7 @@
-/*Menu_Items.js contains the routes for links on home screen and navigation bar
-
-*/
+/**
+ * @file menuItems.js
+ * @fileoverview - Contains the routes for links on home screen and navigation bar.
+ */
 
 'use strict';
 
