@@ -1,35 +1,34 @@
 /**
- * @file catagoryTreeReducer.js
- * @desc Merges in changes to the state for the ProductCatagoryTree component
+ * @file categoryTreeReducer.js
+ * @desc Merges in changes to the state for the ProductCategoryTree component
  * which is used in the app's main Navbar component (hamburger menu).
  */
 
 import * as actionTypes from '../actionTypes';
 
 
-const initialState = {
+const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  catagoryTree: {
-    catagories: []
+  categoryTree: {
   }
-}
+};
 
-export default (state = initialState, action) => {
+export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) {
   switch (action.type) {
-  // Catagory -- Get
-  case actionTypes.REQUEST_RESOURCE_CATAGORY_BY_ID:
+  // Category -- Get
+  case actionTypes.REQUEST_RESOURCE_CATEGORY_BY_ID:
     return {
       ...state,
       isLoadingCatagories: true
     };
 
-  case actionTypes.RECEIVED_RESOURCE_CATAGORY_BY_ID:
+  case actionTypes.RECEIVED_RESOURCE_CATEGORY_BY_ID:
     return {
       ...state,
       isLoadingCatagories: false
     };
 
-  case actionTypes.FAILED_RESOURCE_CATAGORY_BY_ID:
+  case actionTypes.FAILED_RESOURCE_CATEGORY_BY_ID:
     return {
       ...state,
       isLoadingCatagories: false
@@ -37,4 +36,4 @@ export default (state = initialState, action) => {
   default:
     return state
   }
-};
+}

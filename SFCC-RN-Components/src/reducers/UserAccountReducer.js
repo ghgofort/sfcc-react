@@ -14,8 +14,8 @@ const DEFAULT_STATE = {
   profileSaveError: {}
 };
 
-export default function profileReducer(state = DEFAULT_STATE, action = {}) {
-  switch(action.type) {
+export default function userAccountReducer(state = DEFAULT_STATE, action = {}) {
+  switch (action.type) {
     // focus action is dispatched when a new screen comes into focus
     case actionTypes.UPDATE_PROFILE:
       return {
@@ -79,6 +79,6 @@ export default function profileReducer(state = DEFAULT_STATE, action = {}) {
 }
 
 // Selectors (mapStateToProps)
-export const getProfile = ({onLogging}) => ({
+export const getProfile = ({ onLogging }) => ({
   onLogging
 });

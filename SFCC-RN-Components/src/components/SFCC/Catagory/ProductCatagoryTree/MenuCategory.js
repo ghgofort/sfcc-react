@@ -1,5 +1,5 @@
 /**
- * @file MenuCatagory.js
+ * @file MenuCategory.js
  */
 
 import React, { Component } from 'react';
@@ -11,12 +11,12 @@ import {  View, TouchableHighlight, StyleSheet } from 'react-native';
  * app hamburger menu (Navbar component).
  * @param {Object} props
  */
-const MenuCatagory = (props) => {
+const MenuCategory = (props) => {
   const children = props.children && props.children.length ?
     props.children.map((childNode) => {
       const childMenuLevel = props.menuLevel + 1;
       return (
-        <MenuCatagory
+        <MenuCategory
           menuLevel={childMenuLevel}
           catName={childNode.name}
           children={childNode.children && childNode.children.length ? childNode.children : []}
@@ -39,7 +39,7 @@ const MenuCatagory = (props) => {
   );
 };
 
-MenuCatagory.popTypes = {
+MenuCategory.popTypes = {
   catName: PropTypes.string,
   children: PropTypes.node,
   isCurrent: PropTypes.bool.isRequired,
@@ -48,4 +48,4 @@ MenuCatagory.popTypes = {
   parentName: PropTypes.string,
 };
 
-export default MenuCatagory = MenuCatagory;
+export default MenuCategory = MenuCategory;

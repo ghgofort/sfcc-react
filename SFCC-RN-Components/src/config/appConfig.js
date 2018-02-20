@@ -134,7 +134,7 @@ export const apiConfig = {
         calls: {
           get: {
             path: '/{0}',
-            pathParams: [{ name: 'catagoryID', index: 0 }],
+            pathParams: [{ name: 'categoryID', index: 0 }],
             requiredParams: [],
             requiredData: [],
             callType: 'GET',

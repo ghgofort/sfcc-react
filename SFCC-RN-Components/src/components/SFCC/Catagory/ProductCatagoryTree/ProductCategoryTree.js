@@ -1,6 +1,6 @@
 /**
  * @file ProductCategoryTree.js
- * The ProductCatagoryTree file is a React Native component used as part of the
+ * The ProductCategoryTree file is a React Native component used as part of the
  * Navbar component, but could be adopted for use in other places in the app if
  * needed.
  */
@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import {  View, Text, } from 'react-native';
 import PropTypes from 'prop-types';
-import { MenuCatagory } from "./MenuCatagory";
+import { MenuCategory } from "./MenuCategory";
 
 export default class ProductCategoryTree extends Component {
   constructor(props) {
@@ -20,12 +20,12 @@ export default class ProductCategoryTree extends Component {
     };
   };
 
-  _renderCatagory() {
+  _renderCategory() {
 
   }
 
   /**
-   * Loops through each top level catagory, and then recursivly calls renderCatagory
+   * Loops through each top level category, and then recursivly calls renderCategory
    * to fill in all of the child catagories.
    */
   _renderCatagories() {

@@ -9,7 +9,7 @@ import {
   REQUEST_RESOURCE_PRODUCT_IMAGES,
   RECEIVED_RESOURCE_PRODUCT_IMAGES,
   FAILED_RESOURCE_PRODUCT_IMAGES
-} from "../../../../actionTypes";
+} from '../../../../actionTypes';
 
 /* ========================================================================== *
  * Async Action Creators

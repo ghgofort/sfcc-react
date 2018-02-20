@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 import homeReducer, * as fromHome from './homeReducer';
 import infoTileReducer, * as fromInfoTile from './infoTileReducer';
-import profileReducer, * as fromUserAccount from './userAccountReducer';
+import userAccountReducer, * as fromUserAccount from './userAccountReducer';
 
 export default rootReducer = combineReducers({
   homeReducer,
   infoTileReducer,
-  profileReducer
+  userAccountReducer
 });
 
 /**

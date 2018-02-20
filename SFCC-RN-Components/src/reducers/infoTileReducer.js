@@ -9,7 +9,7 @@ import ImageGroup from '../lib/documents/ImageGroup';
 import Product from '../lib/documents/Product';
 import URLHelper from '../lib/utilityHelpers/URLHelper';
 
-const initialState = {
+const DEFAULT_STATE = {
   sceneTransistion: false,
   isLoadingProduct: false,
   isLoadingProductImages: false,
@@ -18,7 +18,7 @@ const initialState = {
   }
 };
 
-export default (state = initialState, action) => {
+export default function infoTileReducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
     // Product -- Get
     case actionTypes.REQUEST_RESOURCE_PRODUCT_BY_ID:
@@ -62,7 +62,7 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
 
 // Selectors
 
