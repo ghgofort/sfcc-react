@@ -9,8 +9,7 @@ import * as actionTypes from '../actionTypes';
 
 const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  categoryTree: {
-  }
+  categoryResult: {}
 };
 
 export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) {
@@ -24,8 +23,8 @@ export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) 
 
   case actionTypes.RECEIVED_RESOURCE_CATEGORY_BY_ID:
     return {
-      ...state,
-      isLoadingCatagories: false
+      isLoadingCatagories: false,
+      categoryResult: action.categoryResult
     };
 
   case actionTypes.FAILED_RESOURCE_CATEGORY_BY_ID:
