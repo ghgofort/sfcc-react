@@ -23,7 +23,7 @@ import VariationGroup from './VariationGroup';
 export default class Product {
 
   /**
-   * @param {string} [args] - An optional object of key value pairs used to pre-populate
+   * @param {Object} [args] - An optional object of key value pairs used to pre-populate
    *    attribute values of the Product instance.
    */
   constructor(args) {
@@ -123,8 +123,8 @@ export default class Product {
         });
       }
 
-      // Custom attributes
-      const custAttrArr = Object.keys(args)
+      // Add custom attributes to the instance.
+      Object.keys(args)
         .filter(key => /^c_/.test(key))
         .forEach(key => this[key] = args[key]);
     }
@@ -139,8 +139,8 @@ export default class Product {
   set currency(value) { this._currency = value }
   get ean() { return this._ean }
   set ean(value) { this._ean = value }
-  get ID() { return this._ID }
-  set ID(value) { this._ID = value }
+  get ID() { return this._id }
+  set ID(value) { this._id = value }
   get imageGroups() { return this._imageGroups }
   set imageGroups(value) { this._imageGroups = value }
   get inventories() { return this._inventories }

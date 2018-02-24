@@ -24,7 +24,7 @@ export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) 
   case actionTypes.RECEIVED_RESOURCE_CATEGORY_BY_ID:
     return {
       isLoadingCatagories: false,
-      categoryResult: action.categoryResult
+      category: action.category
     };
 
   case actionTypes.FAILED_RESOURCE_CATEGORY_BY_ID:
