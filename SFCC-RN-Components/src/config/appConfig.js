@@ -128,8 +128,8 @@ export const apiConfig = {
           }
         }
       },
-      catagories: {
-        path: '/catagories',
+      categories: {
+        path: '/categories',
         API: 'shop',
         calls: {
           get: {

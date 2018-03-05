@@ -48,11 +48,16 @@ class Navbar extends Component {
     };
   }
 
-  componentDidMount(){
-    const dispatch = this.props.dispatch;
-    this.props.categoryActions.getCatagory();
-  })
+  componentDidMount() {
+    this.props.categoryActions.getCategory();
+  }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState((prevState, nextProps) => ({
+      ...prevState,
+      menuItems: nextProps.menuItems,
+      pateTitle: nextProps.pageTitle
+    }));
   }
 
   /**
@@ -168,8 +173,7 @@ class Navbar extends Component {
     return (
       <View>
         <View style={{
-          backgroundColor: '#09414D',
-
+          backgroundColor: '#09414D'
         }}>
 
           <View style={{

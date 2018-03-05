@@ -51,41 +51,40 @@ export const failedCategory = (categoryID, levels) => {
  * @param {number} [levels=2] - The depth of child categories to be retrieved.
  */
 export const getCategory = (categoryID = 'root', levels = 2) => {
-    return (dispatch) => {
-        // Dispatch the Redux action to identify that an OCAPI request was made.
-        dispatch(requestCategory(categoryID, levels));
-        const svc = new OCAPIService();
-        const callSetup = svc.setupCall('categories', 'get', { categoryID: categoryID, levels: levels });
+  return (dispatch) => {
+    // Dispatch the Redux action to identify that an OCAPI request was made.
+    dispatch(requestCategory(categoryID, levels));
+    const svc = new OCAPIService();
+    const callSetup = svc.setupCall('categories', 'get', { categoryID: categoryID, levels: levels });
 
-        if (!callSetup.error) {
-          svc.makeCall(callSetup)
-            .then((response => {
-                if (response.status >= 200 && response.status < 300 && response.ok) {
-                  return response.json();
-                } else {
-                  return {
-                    error: true,
-                    errMsg: 'ERROR at Category/ProductCategoryTree/actions.js in ASYNC action creator: requestCategory'
-                  }
-                }
-              })
-              .then(
-                // Handle success conditions.
-                result => {
-                  if (!result.error) {
-                    dispatch(recievedCategory(new Category(result)));
-                  } else {
-                    dispatch(failedCategory(categoryID, levels));
-                  }
-                },
+    if (!callSetup.error) {
+      svc.makeCall(callSetup)
+        .then(response => {
+          if (response.status >= 200 && response.status < 300 && response.ok) {
+            return response.json();
+          } else {
+            return {
+              error: true,
+              errMsg: 'ERROR at Category/ProductCategoryTree/actions.js in ASYNC action creator: requestCategory'
+            }
+          }
+        }).then(result => {
+            if (!result.error) {
+              dispatch(recievedCategory(new Category(result)));
+            } else {
+              console.log(result.errMsg);
+              dispatch(failedCategory(categoryID, levels));
+            }
+          },
 
-                // Handle error conditions.
-                err => dispatch(failedCategory(categoryID, levels));
+          // Handle error conditions.
+          err => dispatch(failedCategory(categoryID, levels))
+        );
 
-              );
-              }
-              else {
-                dispatch(failedCategory(categoryID, levels));
-              }
-            };
-        };
+    } else {
+      console.log('Call Setup Error:');
+      console.log(callSetup.errMsg);
+      dispatch(failedCategory(categoryID, levels));
+    }
+  };
+};

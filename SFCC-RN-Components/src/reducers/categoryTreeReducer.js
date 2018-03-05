@@ -9,7 +9,9 @@ import * as actionTypes from '../actionTypes';
 
 const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  category: {}
+  category: {
+    categories: []
+  }
 };
 
 export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) {
@@ -36,3 +38,8 @@ export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) 
     return state
   }
 }
+
+// Selectors
+export const getCategoryTree = state => {
+  return state.category;
+};

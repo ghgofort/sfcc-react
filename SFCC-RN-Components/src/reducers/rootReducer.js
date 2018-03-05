@@ -2,11 +2,13 @@ import {combineReducers} from 'redux';
 import homeReducer, * as fromHome from './homeReducer';
 import infoTileReducer, * as fromInfoTile from './infoTileReducer';
 import userAccountReducer, * as fromUserAccount from './userAccountReducer';
+import categoryTreeReducer, * as fromCategoryTree from './categoryTreeReducer';
 
 export default rootReducer = combineReducers({
   homeReducer,
   infoTileReducer,
-  userAccountReducer
+  userAccountReducer,
+  categoryTreeReducer
 });
 
 /**
@@ -19,3 +21,4 @@ export default rootReducer = combineReducers({
 export const getHome = state => fromHome.getHome(state.homeReducer);
 export const getInfoTileProduct = (state) => fromInfoTile.getInfoTileProduct(state.infoTileReducer);
 export const getImageURL = (state) => fromInfoTile.getImageURL(state.infoTileReducer);
+export const getCategoryTree = state => fromCategoryTree.getCategoryTree(state.categoryTreeReducer);

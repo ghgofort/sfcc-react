@@ -148,7 +148,7 @@ export default class OCAPIService {
       // Add any non-required parameters that were included.
       if (callData && usedParams.length) {
         Object.keys(callData).filter(key => usedParams.indexOf(key) > -1).forEach(key => {
-          setupData.endpoint = setupData.endpoint + '&' + field + '=' + callData[field];
+          setupData.endpoint = setupData.endpoint + '&' + key + '=' + callData[key];
         });
       }
     } catch (e) {
