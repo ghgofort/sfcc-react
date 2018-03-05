@@ -48,16 +48,12 @@ class Navbar extends Component {
     };
   }
 
-  /*componentDidMount(){
-    Actions.refresh({renderBackButton: () =>
-    <RightButton
-     rightButtonIcon={"arrow-back"}
-     onRight={() => Actions.pop()} rightButtonColor={"white"}
-     rightButtonIconSize={30}
-    />
+  componentDidMount(){
+    const dispatch = this.props.dispatch;
+    this.props.categoryActions.getCatagory();
   })
 
-  }*/
+  }
 
   /**
   * @function _toggleSidebar

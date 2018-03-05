@@ -9,7 +9,7 @@ import * as actionTypes from '../actionTypes';
 
 const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  categoryResult: {}
+  category: {}
 };
 
 export default function categoryTreeReducer(state = DEFAULT_STATE, action = {}) {

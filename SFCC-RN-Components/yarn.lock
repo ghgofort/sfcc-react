@@ -335,8 +335,8 @@ assert-plus@^0.2.0:
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-0.2.0.tgz#d74e1b87e7affc0db8aadb7021f3fe48101ab234"
 
 ast-types@0.x.x:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.1.tgz#5bb3a8d5ba292c3f4ae94d46df37afc30300b990"
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.2.tgz#cc4e1d15a36b39979a1986fe1e91321cbfae7783"
 
 astral-regex@^1.0.0:
   version "1.0.0"

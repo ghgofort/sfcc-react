@@ -135,7 +135,7 @@ export const apiConfig = {
           get: {
             path: '/{0}',
             pathParams: [{ name: 'categoryID', index: 0 }],
-            requiredParams: [],
+            requiredParams: ['levels'],
             requiredData: [],
             callType: 'GET',
             headers: {

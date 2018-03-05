@@ -7,6 +7,7 @@
  * @property {string} name - The name assigned to the Category.
  * @property {string} pageDescription - A description to use for displaying the category as a page.
  * @property {string} pageTitle - A title to use for displaying the category as a page.
+ * @property {string} parentCategoryID - The ID of the parent category.
  * @property {string} type - The type of OCAPI document that the class instance represents.
  * @property {string} version - The version of the OCAPI document that is being stored to memory.
  *
@@ -23,6 +24,7 @@ export default class Category {
    * @param {string} [args.name] - The name property of the SFCC Category.
    * @param {string} [args.page_description] - A description that can be used to display the Category as a page.
    * @param {string} [args.page_title] - A title that can be used to display the Category as a page.
+   * @param {string} [args.parent_category_id] - The ID attribute of the parent category.
    */
   constructor(args) {
     /** @type {Category[]} */
@@ -36,28 +38,34 @@ export default class Category {
     /** @type {string} */
     this._pageTitle = args && args.page_title ? args.page_title : '';
     /** @type {string} */
+    this._parentCategoryID = args && args.parent_category_id ? args.parent_category_id : '';
+    /** @type {string} */
     this._type = 'category';
     /** @type {string} */
     this._version = args && args._v ? args._v : '';
 
     // Add custom attributes to the instance.
-    Object.keys(args)
-      .filter(key => /^c_/.test(key))
-      .forEach(key => this[key] = args[key]);
+    if (args && args.length) {
+      Object.keys(args)
+        .filter(key => /^c_/.test(key))
+        .forEach(key => this[key] = args[key]);
+    }
   }
 
-  get categories() {return this._categories}
-  set categories(value) {this._categories = value}
+  get categories() { return this._categories }
+  set categories(value) { this._categories = value }
   get ID() { return this._id }
   set ID(value) { this._id = value }
-  get name() {return this._name}
-  set name(value) {this._name = value}
-  get pageDescription() {return this._pageDescription}
-  set pageDescription(value) {this._pageDescription = value}
-  get pageTitle() {return this._pageTitle}
-  set pageTitle(value) {this._pageTitle = value}
-  get type() {return this._type}
-  set type(value) {this._type = value}
+  get name() { return this._name }
+  set name(value) { this._name = value }
+  get pageDescription() { return this._pageDescription }
+  set pageDescription(value) { this._pageDescription = value }
+  get pageTitle() { return this._pageTitle }
+  set pageTitle(value) { this._pageTitle = value }
+  get parentCategoryID() { return this._parentCategoryID }
+  set parentCategoryID(value) { this._parentCategoryID = value }
+  get type() { return this._type }
+  set type(value) { this._type = value }
   get version() { return this._version }
   set version(value) { this._version = value }
 }

@@ -2,12 +2,12 @@ import expect from 'expect';
 import categoryTreeReducer from '../../src/reducers/categoryTreeReducer';
 import { Reducer } from 'redux-testkit';
 import * as actionTypes from '../../src/actionTypes';
-import CategoryResult from '../../src/lib/documents/CategoryResult';
-import CategoryResultMock from '../../__mocks__/CategoryResultMock';
+import Category from '../../src/lib/documents/Category';
+import CategoryMock from '../../__mocks__/CategoryMock';
 
 const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  categoryResult: {}
+  category: {}
 };
 
 describe('src/reducers/categoryTreeReducer.js -- Tests', () => {
@@ -24,8 +24,8 @@ describe('src/reducers/categoryTreeReducer.js -- Tests', () => {
 
   // Test addition of a CategoryResult instance to the state.
   it('should add a category_result document instance to the state.', () => {
-    const categoryResult = new CategoryResult(CategoryResultMock);
-    const action = { type: actionTypes.RECEIVED_RESOURCE_CATEGORY_BY_ID, categoryResult: categoryResult}
-    Reducer(categoryTreeReducer).expect(action).toReturnState({...DEFAULT_STATE, categoryResult});
+    const category = new Category(CategoryMock);
+    const action = { type: actionTypes.RECEIVED_RESOURCE_CATEGORY_BY_ID, category: category}
+    Reducer(categoryTreeReducer).expect(action).toReturnState({...DEFAULT_STATE, category});
   });
 });
