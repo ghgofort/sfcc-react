@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react-native": "^3.2.1",
     "expect": "^22.0.3",
+    "glob": "*",
+    "jest-cli": "^22.4.3",
+    "jest-environment-node": "^22.4.3",
     "jest-expo": "23.0.0",
     "react-native-scripts": "^1.11.1",
     "react-test-renderer": "16.0.0",
@@ -21,6 +28,7 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "testEnvironment": "node",
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|expo|react-navigation|native-base-shoutem-theme|@shoutem/theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|mobx-react|react-native-router-flux)"
     ]

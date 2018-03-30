@@ -10,7 +10,8 @@
  * - Github: ghgofort
  */
 
-import { appConfig, apiConfig } from '../../config/appConfig';
+import { apiConfig } from '../../config/apiConfig';
+import { appConfig } from '../../config/appConfig';
 import OCAPICallInfo from './OCAPICallInfo';
 
 let OCAPIServiceInstance = null;

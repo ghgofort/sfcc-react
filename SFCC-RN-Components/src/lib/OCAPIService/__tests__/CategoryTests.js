@@ -1,6 +1,6 @@
 import expect from 'expect';
-import OCAPIService from '../../../src/lib/OCAPIService/OCAPIService';
-import OCAPICallInfo from '../../../src/lib/OCAPIService/OCAPICallInfo';
+import OCAPIService from '../OCAPIService';
+import OCAPICallInfo from '../OCAPICallInfo';
 
 describe('OCAPIService.setupCall() for making a request for categories.', () => {
   let svc, setupResult, expectedResult;

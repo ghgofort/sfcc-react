@@ -1,13 +1,13 @@
 import expect from 'expect';
-import categoryTreeReducer from '../../src/reducers/categoryTreeReducer';
+import categoryTreeReducer from '../categoryTreeReducer';
 import { Reducer } from 'redux-testkit';
-import * as actionTypes from '../../src/actionTypes';
-import Category from '../../src/lib/documents/Category';
-import CategoryMock from '../../__mocks__/CategoryMock';
+import * as actionTypes from '../../actionTypes';
+import Category from '../../lib/documents/Category';
+import CategoryMock from '../../lib/OCAPIService/__mocks__/CategoryMock';
 
 const DEFAULT_STATE = {
   isLoadingCatagories: false,
-  category: {}
+  category: {categories: []}
 };
 
 describe('src/reducers/categoryTreeReducer.js -- Tests', () => {

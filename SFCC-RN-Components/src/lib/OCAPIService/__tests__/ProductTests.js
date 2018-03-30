@@ -1,6 +1,6 @@
 import expect from 'expect';
-import OCAPIService from '../../../src/lib/OCAPIService/OCAPIService';
-import OCAPICallInfo from '../../../src/lib/OCAPIService/OCAPICallInfo';
+import OCAPIService from '../OCAPIService';
+import OCAPICallInfo from '../OCAPICallInfo';
 
 // Test the setupCall method in the OCAPIService class.
 describe('OCAPIService.setupCall() for getting a single product.', () => {
