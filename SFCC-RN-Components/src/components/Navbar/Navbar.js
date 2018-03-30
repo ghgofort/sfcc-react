@@ -48,16 +48,17 @@ class Navbar extends Component {
     };
   }
 
-  /*componentDidMount(){
-    Actions.refresh({renderBackButton: () =>
-    <RightButton
-     rightButtonIcon={"arrow-back"}
-     onRight={() => Actions.pop()} rightButtonColor={"white"}
-     rightButtonIconSize={30}
-    />
-  })
+  componentDidMount() {
+    this.props.categoryActions.getCategory();
+  }
 
-  }*/
+  componentWillReceiveProps(nextProps) {
+    this.setState((prevState, nextProps) => ({
+      ...prevState,
+      menuItems: nextProps.menuItems,
+      pateTitle: nextProps.pageTitle
+    }));
+  }
 
   /**
   * @function _toggleSidebar
@@ -172,8 +173,7 @@ class Navbar extends Component {
     return (
       <View>
         <View style={{
-          backgroundColor: '#09414D',
-
+          backgroundColor: '#09414D'
         }}>
 
           <View style={{

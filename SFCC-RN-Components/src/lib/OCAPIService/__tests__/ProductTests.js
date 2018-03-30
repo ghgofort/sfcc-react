@@ -1,9 +1,9 @@
-import OCAPIService from '../../src/lib/OCAPIService/OCAPIService';
 import expect from 'expect';
-import OCAPICallInfo from '../../src/lib/OCAPIService/OCAPICallInfo';
+import OCAPIService from '../OCAPIService';
+import OCAPICallInfo from '../OCAPICallInfo';
 
 // Test the setupCall method in the OCAPIService class.
-describe('OCAPIService.setupCall() for getting a single product', () => {
+describe('OCAPIService.setupCall() for getting a single product.', () => {
   let svc, setupResult, expectedResult;
 
   // Setup the test suite.

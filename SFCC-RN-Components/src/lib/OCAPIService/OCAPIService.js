@@ -10,7 +10,8 @@
  * - Github: ghgofort
  */
 
-import { appConfig, apiConfig } from '../../config/appConfig';
+import { apiConfig } from '../../config/apiConfig';
+import { appConfig } from '../../config/appConfig';
 import OCAPICallInfo from './OCAPICallInfo';
 
 let OCAPIServiceInstance = null;
@@ -54,6 +55,7 @@ export default class OCAPIService {
    */
   setupCall(resourceName, callName, callData) {
     const setupData = new OCAPICallInfo();
+    const usedParams = [];
     let ep = '';
     let errMsg = 'ERROR in OCAPIService at setupCall';
 
@@ -63,10 +65,8 @@ export default class OCAPIService {
         rescSetup.calls[callName] : null;
 
       setupData.apiCallFunction = this._isMock ? this._fetchMockData : this._fetchData;
-      setupData.httpVerb = callSetup.callType;
       setupData.endpoint = '';
       setupData.body = {};
-      setupData.headers = callSetup.headers;
       setupData.error = false;
       setupData.errMsg ='';
 
@@ -77,6 +77,8 @@ export default class OCAPIService {
 
       // Setup the URI for making the REST call.
       if (callSetup) {
+        setupData.headers = callSetup.headers;
+        setupData.httpVerb = callSetup.callType;
         // Get the base endpoint from the config file for the configured instance type.
         ep = apiConfig.OCAPI.baseEndpoints[appConfig.instanceType];
 
@@ -107,6 +109,7 @@ export default class OCAPIService {
           } else {
             // Append each query string parameter to the URL
             setupData.endpoint = setupData.endpoint + '&' + field + '=' + callData[field];
+            usedParams.push(field);
           }
         });
       }
@@ -121,6 +124,7 @@ export default class OCAPIService {
             let bd = setupData.body;
             bd[field] = callData[field];
             setupData.body = bd;
+            usedParams.push(field);
           }
         });
       }
@@ -137,7 +141,15 @@ export default class OCAPIService {
             let fieldValue = Array.isArray(callData[field.name]) ? '(' + callData[field.name].toString() + ')' : callData[field.name];
             let strReplace = '{' + field.index + '}';
             setupData.endpoint = setupData.endpoint.replace(strReplace, fieldValue);
+            usedParams.push(field);
           }
+        });
+      }
+
+      // Add any non-required parameters that were included.
+      if (callData && usedParams.length) {
+        Object.keys(callData).filter(key => usedParams.indexOf(key) > -1).forEach(key => {
+          setupData.endpoint = setupData.endpoint + '&' + key + '=' + callData[key];
         });
       }
     } catch (e) {

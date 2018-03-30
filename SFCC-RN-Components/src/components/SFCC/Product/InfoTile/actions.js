@@ -9,7 +9,7 @@ import {
   REQUEST_RESOURCE_PRODUCT_IMAGES,
   RECEIVED_RESOURCE_PRODUCT_IMAGES,
   FAILED_RESOURCE_PRODUCT_IMAGES
-} from "../../../../actionTypes";
+} from '../../../../actionTypes';
 
 /* ========================================================================== *
  * Async Action Creators
@@ -43,12 +43,9 @@ export const requestProduct = (productID) => {
         })
         .then(
           result => {
-            console.log('Request for Product:');
-            console.log(result);
             if (!result.error) {
               dispatch(receivedProductById(new Product(result)));
             } else {
-              console.log(result.errMsg);
               dispatch(failedProductById(result.errMsg));
             }
           },
@@ -70,19 +67,15 @@ export const requestImagesForProduct = (productID) => {
     // Get the call data object to make the call.
     const callSetup = svc.setupCall('products', 'images', { productID: productID, all_images: true });
     if (!callSetup.error) {
-      console.log('API call setup successfull.');
-      console.log(callSetup);
       svc.makeCall(callSetup)
         .then((response) => {
-          console.log('Request for Product Images:');
-          console.log(response);
           if (response.status >= 200 && response.status < 300 && response.ok) {
-            return response.json()
+            return response.json();
           } else {
             return {
               error: true,
               errMsg: 'ERROR at Product/infoTile/actions.js in ASYNC action creator: requestProduct'
-            }
+            };
           }
         })
         .then(

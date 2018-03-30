@@ -1,5 +1,5 @@
 import expect from 'expect';
-import URLHelper from '../../../src/lib/utilityHelpers/URLHelper';
+import URLHelper from '../URLHelper';
 
 
 describe('URLHelper.js utility helper methods.', () => {
