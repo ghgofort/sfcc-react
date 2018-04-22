@@ -33,11 +33,12 @@ export const recievedCategory = (category) => {
   };
 };
 
-export const failedCategory = (categoryID, levels) => {
+export const failedCategory = (categoryID, levels, error) => {
   return {
     type: FAILED_RESOURCE_CATEGORY_BY_ID,
     categoryID: categoryID,
-    levels: levels
+    levels: levels,
+    error: error
   };
 };
 
@@ -55,7 +56,8 @@ export const getCategory = (categoryID = 'root', levels = 2) => {
     // Dispatch the Redux action to identify that an OCAPI request was made.
     dispatch(requestCategory(categoryID, levels));
     const svc = new OCAPIService();
-    const callSetup = svc.setupCall('categories', 'get', { categoryID: categoryID, levels: levels });
+    const callSetup = svc.setupCall('categories', 'get', {
+      categoryID: categoryID, levels: levels });
 
     if (!callSetup.error) {
       svc.makeCall(callSetup)
@@ -65,7 +67,8 @@ export const getCategory = (categoryID = 'root', levels = 2) => {
           } else {
             return {
               error: true,
-              errMsg: 'ERROR at Category/ProductCategoryTree/actions.js in ASYNC action creator: requestCategory'
+              errMsg: 'ERROR at Category/ProductCategoryTree/actions.js in ' +
+                'ASYNC action creator: requestCategory'
             }
           }
         }).then(result => {
@@ -73,12 +76,12 @@ export const getCategory = (categoryID = 'root', levels = 2) => {
               dispatch(recievedCategory(new Category(result)));
             } else {
               console.log(result.errMsg);
-              dispatch(failedCategory(categoryID, levels));
+              dispatch(failedCategory(categoryID, levels, result.error));
             }
           },
 
           // Handle error conditions.
-          err => dispatch(failedCategory(categoryID, levels))
+          err => dispatch(failedCategory(categoryID, levels, err))
         );
 
     } else {

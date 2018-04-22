@@ -53,7 +53,8 @@
   // Configuration settings for the navbar menu in the expanded state.
   sidebar: {
 
-    // Defines the proportion of the screen that will not be covered by the sidebar menu.
+    // Defines the proportion of the screen that will not be covered by the
+    // sidebar menu.
     marginRight: .3,
 
     // Define the time (in ms) that it takes to toggle the sidebar menu.

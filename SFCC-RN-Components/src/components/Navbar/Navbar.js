@@ -1,9 +1,9 @@
 'use strict';
 
 /**
-* Navbar.js
-* A Navbar component to hold the top navbar that will be included globaly
-* for all scenes in the app.
+* @file Navbar.js
+* @fileoverview - A Navbar component to hold the top navbar that will be included globaly
+*     for all scenes in the app.
 */
 
 import React, {Component} from 'react';
@@ -18,13 +18,18 @@ import {
   Animated
 } from 'react-native';
 
-import {Actions} from 'react-native-router-flux';
-import {updateProfile} from '../UserAccount/actions';
+import { Actions } from 'react-native-router-flux';
+import { updateProfile } from '../UserAccount/actions';
 //import LeftButton from './leftbutton'
-import {dispatch, connect} from 'react-redux';
-import {appConfig} from '../../config/appConfig';
-import {navbarStyles, colors} from '../../styles/globalStyles';
+import { dispatch, connect } from 'react-redux';
+import { appConfig } from '../../config/appConfig';
+import { navbarStyles, colors } from '../../styles/globalStyles';
 
+/**
+ * @class
+ * @description - A Hamburger style menu that allows for rendering of custom
+ *    menu items as child components.
+ */
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -44,14 +49,25 @@ class Navbar extends Component {
       edge: edge,
       topMenuHeight: 46,
       toggleTime: appConfig.sidebar.toggleTime,
-      menuItems: props.menuItems
+      menuItems: props.menuItems,
+      pageTitle: props.pageTitle
     };
   }
 
+  /**
+   * @function componentDidMount - React lifecycle method that is executed when
+   *    this component is first rendered to the dom.
+   */
   componentDidMount() {
     this.props.categoryActions.getCategory();
   }
 
+  /**
+   * @function componentWillReceiveProps - React lifecycle method used to pass
+   *    in data from the application state.
+   * @param {object} nextProps - The updated props object that is passed in from
+   *    the component's container.
+   */
   componentWillReceiveProps(nextProps) {
     this.setState((prevState, nextProps) => ({
       ...prevState,
@@ -78,6 +94,12 @@ class Navbar extends Component {
     }
   }
 
+  /**
+   * @function _menuItemSelect - Used to call an action creation method assigned
+   *    to handle a click action on a menu item.
+   * @param {object} item - An action creation method to call when the
+   *    associated menu item is selcted.
+   */
   _menuItemSelect(item) {
     Actions[item.id].apply();
   }
@@ -113,6 +135,13 @@ class Navbar extends Component {
     });
   }
 
+  /**
+   * @function _handleLayoutChange - Event handler method to adjust rendering of
+   *    the navbar component when the screen orientation of the host device is
+   *    changed between landscape and portrait.
+   * @param {Event} event - The Event object that is created when the action
+   *    occurs.
+   */
   _handleLayoutChange(event) {
     const layout = event.nativeEvent.layout;
     this.setState({
@@ -124,7 +153,7 @@ class Navbar extends Component {
 
   /**
   * @function _getSidebarOverlay - Creates an overlay for holding all of the controls
-  *                                that live in the sidebar control.
+  *     that live in the sidebar control.
   * @return {React.Component}
   */
   _getSidebarOverlay() {
@@ -132,16 +161,27 @@ class Navbar extends Component {
       ? this.state.edge
       : 0;
 
-    const mySidebar = this.state.menuItems.map((item) => <TouchableHighlight key={item.id} onPress={() => {
-      this._toggleSidebar();
-      this._menuItemSelect(item);
-    }}>
-      <View style={navbarStyles.item}>
-        <Text style={[navbarStyles.topBorder, navbarStyles.lightText]}>
-          {item.title}
-        </Text>
-      </View>
-    </TouchableHighlight>);
+    const mySidebar = this.state.menuItems.map((item) => {
+      if (!item.renderProps) {
+        return (
+          <TouchableHighlight
+            key={item.id} onPress={() => {
+              this._toggleSidebar();
+              this._menuItemSelect(item);
+          }}>
+
+            <View style={navbarStyles.item}>
+              <Text style={[navbarStyles.topBorder, navbarStyles.lightText]}>
+                {item.title}
+              </Text>
+            </View>
+
+          </TouchableHighlight>
+        );
+      } else {
+        return item.renderProps();
+      }
+    });
 
     return (
       <Animated.View style={[
@@ -161,6 +201,10 @@ class Navbar extends Component {
     );
   }
 
+  /**
+   * @function _updateProfile - Calls the action creator method to navigate to
+   *    the user profile editor.
+   */
   _updateProfile() {
     Actions['userAccount'].apply();
   }

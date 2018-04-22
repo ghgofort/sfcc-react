@@ -18,8 +18,14 @@ export default class AsyncStorageService {
   }
 
   /**
-   * @param  {string|Array<string>} itemNames - String key name(s) for the items to be ready from AsyncStorage.
-   * @return {Promise}                        - A Promise that will resolve to return the data read from AsyncStorage.
+   * Reads an item or multiple items from the device storage database and
+   * returns a promise that resolves with the results.
+   *
+   * @param  {string|Array<string>} itemNames - String key name(s) for the items
+   *    to be read from AsyncStorage. Either a single name can be passed as a
+   *    string, or multiple item names can be passed as an Array of strings.
+   * @return {Promise} - A Promise that will resolve to return the data read
+   *    from AsyncStorage.
    */
   read(itemNames) {
     // Create curried error callback instance.
@@ -46,8 +52,11 @@ export default class AsyncStorageService {
 
   /**
    * Write key value pairs to the local device storage.
-   * @param  {Array|Object} keyValArray - Key/Value pairs in Array or Object form to write to device storage.
-   * @return {Promise}                  - Promise with the results from the data write.
+   * @param  {Array|Object} keyValArray - Key/Value pairs in Array or Object
+   *    form to write to device storage.
+   * @return {Promise} - Promise with the results from the data
+   *    write.
+   *
    * @example
    * write({
    *  'fruit': 'apples',
@@ -120,11 +129,10 @@ export default class AsyncStorageService {
   /**
    * Deletes an item or items with given key(s) from local device storage.
    * @param  {Array|string} itemNames - The key names of the items to be
-   *                                    removed from device storage.
-   * @return {Promise}                - Returns a Promise that resolves to an object
-   *                                    with a 'success' property that indicates if the
-   *                                    item(s) were successfully deleted from the device
-   *                                    storage.
+   *    removed from device storage.
+   * @return {Promise} - Returns a Promise that resolves to an object with a
+   *    'success' property that indicates if the item(s) were successfully
+   *    deleted from the device storage.
    */
   delete(itemNames) {
     try {
