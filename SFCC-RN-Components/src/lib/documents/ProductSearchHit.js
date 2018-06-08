@@ -104,13 +104,32 @@ export default class ProductSearchHit {
   /* Public Instance Methods
      ======================================================================== */
 
-
   /**
+   * Gets a JSON string of the class that matches the OCAPI document (v18.3)
+   * definition.
+   *
    * @return {String} - A JSON string representation of the instance that
    *    matches the OCAPI document definition.
    */
   getDocument() {
-    /** @todo : Implement the getDocument() method for the ProductSerachHit class */
+    const doc = {
+      currency: this._currency,
+      hit_type: this._hitType,
+      image: this._image,
+      link: this._link,
+      orderable: this._orderable,
+      price: this._price,
+      price_max: this._priceMax,
+      prices: this._prices,
+      product_id: this._productID,
+      product_name: this._productName,
+      product_type: this._productType,
+      represented_product: this._representedProduct,
+      represented_products: this._representedProducts,
+      variation_attributes: this._variationAttributes
+    };
+
+    return doc;
   }
 
 }
