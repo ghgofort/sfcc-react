@@ -35,4 +35,23 @@ export default class Image {
   set title(value) { this._title = value }
   get alt() { return this._alt }
   set alt(value) { this._alt = value }
+
+  /**
+   * Returns an object literal representation of the class instance that matches
+   * the OCAPI specification (v18.6) in order to provide an easy way to include
+   * the document instance in POST/PUT API calls to OCAPI.
+   *
+   * @return {Object} - The object literal representation of the class instance
+   *    according to the OCAPI document specification.
+   */
+  getDocument() {
+    const doc = {
+      link: this._link,
+      dis_base_link: this._disBaseLink,
+      title: this._title,
+      alt: this._alt
+    };
+
+    return doc;
+  }
 }

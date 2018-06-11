@@ -89,10 +89,10 @@ export default class Category {
   set version(value) { this._version = value }
 
   /**
-   * Gets a JSON string of the class that matches the OCAPI document (v18.3)
+   * Gets an object literal of the class that matches the OCAPI document (v18.6)
    * definition.
    *
-   * @return {String} - A JSON string representation of the class instance that
+   * @return {Object} - A JSON string representation of the class instance that
    *    matches the OCAPI document definition.
    */
   getDocument() {

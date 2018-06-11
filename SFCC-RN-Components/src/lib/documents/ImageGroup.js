@@ -1,6 +1,6 @@
 /**
  * @file ImageGroup.js
- * ImageGroup OCAPI document class.
+ * @fileoverview - ImageGroup OCAPI document class.
  */
 
 import Image from './Image';
