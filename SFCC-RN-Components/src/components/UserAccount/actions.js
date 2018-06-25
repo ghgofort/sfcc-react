@@ -1,3 +1,9 @@
+/**
+ * @file UserAccount/actions.js
+ * @fileoverview - Exports redux action creation methods for modifying the
+ * application scope state from the UserAccount component.
+ */
+
 import {
   REQUEST_SAVE_PROFILE,
   RECEIVED_SAVE_PROFILE,
