@@ -72,7 +72,7 @@ export const apiConfig = {
             }
           },
           getAvailability: {
-            path: '/{0}',
+            path: '/availability',
             pathParams: [],
             requiredParams: [],
             requiredData: [],
@@ -82,7 +82,7 @@ export const apiConfig = {
             }
           },
           getImages: {
-            path: '/{0}',
+            path: '/images',
             pathParams: [],
             requiredParams: [],
             requiredData: [],
@@ -92,7 +92,7 @@ export const apiConfig = {
             }
           },
           getPrices: {
-            path: '/{0}',
+            path: '/prices',
             pathParams: [],
             requiredParams: [],
             requiredData: [],
@@ -102,7 +102,7 @@ export const apiConfig = {
             }
           },
           getRepresentedProducts: {
-            path: '/{0}',
+            path: '/represented_products',
             pathParams: [],
             requiredParams: [],
             requiredData: [],
