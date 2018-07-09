@@ -6,5 +6,12 @@
 
 import * as actionTypes from '../actionTypes';
 
-export default function infoTileReducer(state = DEFAULT_STATE, action) {
+const DEFAULT_STATE = {};
+
+export default function productSearchReducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
+
+    default:
+      return state;
+  }
+}

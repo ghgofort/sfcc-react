@@ -29,21 +29,21 @@ export const requestProductSearch = (productID) => {
  * ========================================================================== */
 
 // Product / images
-export const requestProductImages = (productID) => {
+export const requestProductSearch = (productID) => {
   return {
     type: REQUEST_RESOURCE_PRODUCT_IMAGES,
     product: productID
   };
 };
 
-export const receivedProductImages = (product) => {
+export const receivedProductSearch = (product) => {
   return {
     type: RECEIVED_RESOURCE_PRODUCT_IMAGES,
     product: product
   };
 };
 
-export const failedProductImages = (err) => {
+export const failedProductSearch = (err) => {
   return {
     type: FAILED_RESOURCE_PRODUCT_IMAGES,
     error: err
