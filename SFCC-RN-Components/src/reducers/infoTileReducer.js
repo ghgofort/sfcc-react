@@ -5,7 +5,6 @@
  */
 
 import * as actionTypes from '../actionTypes';
-import ImageGroup from '../lib/documents/ImageGroup';
 import Product from '../lib/documents/Product';
 import URLHelper from '../lib/utilityHelpers/URLHelper';
 
