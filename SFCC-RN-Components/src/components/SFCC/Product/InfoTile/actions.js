@@ -1,5 +1,9 @@
-import ReduxThunk from 'redux-thunk'
-import { Actions } from 'react-native-router-flux';
+/**
+ * @file InfoTile/actions.js
+ * @fileoverview - Exports redux thunk action creation methods for modifying the
+ * application scope state object from the ProductListView component.
+ */
+
 import OCAPIService from '../../../../lib/OCAPIService/OCAPIService';
 import Product from '../../../../lib/documents/Product';
 import {

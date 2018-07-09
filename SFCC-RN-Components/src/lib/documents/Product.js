@@ -27,16 +27,16 @@ export default class Product {
    *    attribute values of the Product instance.
    */
   constructor(args) {
-    /** @type {string} */
+    /** @type {String} */
     this._brand = args && args.brand ? args.brand : '';
     /** @type {Array<BundledProduct>} */
     this._bundledProducts = args && args.bundled_products ?
       args.bundled_products.map(bp => new BundledProduct(bp)) : [];
-    /** @type {string} */
+    /** @type {String} */
     this._currency = args && args.currency ? args.currency : '';
-    /** @type {string} */
+    /** @type {String} */
     this._ean = args && args.ean ? args.ean : '';
-    /** @type {string} */
+    /** @type {String} */
     this._id = args && args.id ? args.id : '';
     /** @type {Array<ImageGroup>} */
     this._imageGroups = args && args.image_groups ?
@@ -46,36 +46,36 @@ export default class Product {
       args.inventories.map(iv => new Inventory(iv)) : [];
     /** @type {Inventory} */
     this._inventory = args && args.inventory ? new Inventory(args.inventory) : new Inventory();
-    /** @type {string} */
+    /** @type {String} */
     this._longDescription = args && args.long_description ? args.long_description : '';
-    /** @type {string} */
+    /** @type {String} */
     this._manufacturerName = args && args.manufacturer_name ? args.manufacturer_name : '';
-    /** @type {string} */
+    /** @type {String} */
     this._manufacturerSKU = args && args.manufacturer_sku ? args.manufacturer_sku : '';
     /** @type {boolean} */
     this._master = args && args.isMaster ? args.isMaster : false;
-    /** @type {number} */
+    /** @type {Number} */
     this._minOrderQuantity = args && args.min_order_quantity ? args.min_order_quantity : '';
-    /** @type {string} */
+    /** @type {String} */
     this._name = args && args.name ? args.name : '';
     /** @type {Array<Option>} */
     this._options = args && args.options ?
       args.options.map(op => new Option(op)) : [];
-    /** @type {string} */
+    /** @type {String} */
     this._pageDescription = args && args.page_description ? args.page_description : '';
-    /** @type {string} */
+    /** @type {String} */
     this._pageKeywords = args && args.page_keywords ? args.page_keywords : '';
-    /** @type {string} */
+    /** @type {String} */
     this._pageTitle = args && args.page_title ? args.page_title : '';
-    /** @type {string} */
+    /** @type {String} */
     this._pageDescription = args && args.page_description ? args.page_description : '';
-    /** @type {number} */
+    /** @type {Number} */
     this._price = args && args.price ? args.price : 0;
-    /** @type {number} */
+    /** @type {Number} */
     this._priceMax = args && args.price_max ? args.price_max : 0;
     /** @type {Map<string, number>} */
     this._prices = new Map();
-    /** @type {string} */
+    /** @type {String} */
     this._primaryCategoryID = args && args.primary_category_id ? args.primary_category_id : '';
     /** @type {Array<ProductLink>} */
     this._productLinks = args && args.product_links ?
@@ -89,15 +89,15 @@ export default class Product {
     /** @type {Array<Product>} */
     this._setProducts = args && args.set_products ?
       args.set_products.map(sp => new Product(sp)) : [];
-    /** @type {string} */
+    /** @type {String} */
     this._shortDescription = args && args.short_description ? args.short_description : '';
-    /** @type {number} */
+    /** @type {Number} */
     this._stepQuantity = args && args.step_quantity ? args.step_quantity : 1;
     /** @type {ProductType} */
     this._productType = args && args.type ? new ProductType(args.type) : new ProductType();
-    /** @type {string} */
+    /** @type {String} */
     this._unit = args && args.unit ? args.unit : '';
-    /** @type {string} */
+    /** @type {String} */
     this._upc = args && args.upc ? args.upc : '';
     /** @type {Array<Variant>} */
     this._variants = args && args.variants ?
@@ -105,7 +105,7 @@ export default class Product {
     /** @type {Array<VariationGroup>} */
     this._variationGroups = args && args.variation_groups ?
       args.variation_groups.map(vg => new VariationGroup) : [];
-    /** @type {Map<string, string>} */
+    /** @type {Map<String, String>} */
     this._variationValues = new Map();
 
     // Populate the properties of type Map, and the custom properties.
