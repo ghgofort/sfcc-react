@@ -1,3 +1,9 @@
+/**
+ * @file categoryTreeReducerTests.js
+ * @fileoverview - Unit test coverage for the categoryTreeReducer merge
+ * functions.
+ */
+
 import expect from 'expect';
 import categoryTreeReducer from '../categoryTreeReducer';
 import { Reducer } from 'redux-testkit';

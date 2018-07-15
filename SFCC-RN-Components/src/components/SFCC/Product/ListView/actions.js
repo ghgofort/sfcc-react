@@ -10,11 +10,21 @@ import {
   RECEIVED_RESOURCE_PRODUCT_SEARCH,
   FAILED_RESOURCE_PRODUCT_SEARCH
 } from '../../../../actionTypes';
+import ProductSearchParams from '../../../../lib/OCAPIHelpers/callParameters/ProductSearchParams';
 
 /* ========================================================================== *
  * Async Action Creators
  * ========================================================================== */
 
+/**
+ * Makes a call to the OCAPI Service and dispatches the synchronous redux action
+ * methods for the beginning of the API call, and the success/failure of the
+ * call.
+ *
+ * @param {ProductSearchParams} productSearchParams - An instance of the
+ *    ProductSearchParameters class representing the query parameters included
+ *    for the product search call.
+ */
 export const makeProductSearchCall = (productSearchParams) => {
   return (dispatch) => {
     // Dispatch a syncronous action to note that the API call has begun.
@@ -37,7 +47,7 @@ export const makeProductSearchCall = (productSearchParams) => {
           result => {
             console.log('ProductSearch call result: ', result);
             if (!result.error) {
-              dispatch(receivedProductSearch(new ProductSearchResult(result, productSearchParams)));
+              dispatch(receivedProductSearch(new ProductSearchResult(result), productSearchParams));
             } else {
               console.log(result.errMsg);
               dispatch(failedProductSearch(result.errMsg, productSearchParams));
@@ -55,10 +65,9 @@ export const makeProductSearchCall = (productSearchParams) => {
  * Synchronous Action Creators
  * ========================================================================== */
 
-
 /**
  *
- * @param {{count? : number, }} productSearchParams
+ * @param {ProductSearchParams} productSearchParams
  */
 export const requestProductSearch = (productSearchParams) => {
   return {

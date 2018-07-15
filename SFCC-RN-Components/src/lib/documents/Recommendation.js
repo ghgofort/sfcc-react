@@ -1,6 +1,6 @@
 /**
  * @file Recommendation.js
- * Recommendation OCAPI document class.
+ * @fileoverview Recommendation OCAPI document class.
  */
 
  /**

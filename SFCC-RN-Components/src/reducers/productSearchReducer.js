@@ -9,12 +9,10 @@ import ProductSearchResult from '../lib/documents/ProductSearchResult';
 
 const DEFAULT_STATE = {
   isLoadingProductSearch: false,
-  productSearch: {
-    productSearchResult: new ProductSearchResult()
-  }
+  productSearchMap: new Map()
 };
 
-export default function productSearchReducer(state = DEFAULT_STATE, action) {
+export default function productSearchReducer(state = DEFAULT_STATE, action = {}) {
   switch (action.type) {
     case actionTypes.FAILED_RESOURCE_PRODUCT_SEARCH:
       return {
@@ -28,7 +26,7 @@ export default function productSearchReducer(state = DEFAULT_STATE, action) {
       return {
         ...state,
         isLoadingProductSearch: false,
-        productSearch: addProductSearchToState(action.productSearchResult, state.productSearch)
+        productSearchMap: addProductSearchToState(action.productSearchResult, action.productSearchParams, state.productSearchMap)
       };
     default:
       return state;
@@ -40,8 +38,24 @@ export default function productSearchReducer(state = DEFAULT_STATE, action) {
 
 /**
  * Adds the results of a ProductSearch OCAPI call to the App global state.
- * @param {ProductSearchResult} productSearchResult
+ * - If a result for the search parameter set is currently cached in the app
+ *   state, then it will overwrite the entry.
+ * - If there is no result cached for the search parameters, then a new entry
+ *   will be added.
+ * @param {ProductSearchResult} productSearchResult - The results returned from
+ *    the ProductSearch API call.
+ * @param {ProductSearchParams} productSearchParams - The parameters object for
+ *    the ProductSearch API call.
+ * @param {Map<string, {productSearchResult: ProductSearchResult, productSearchParams: ProductSearchParams}>} productSearchMap
+ * @return {Map<string, {productSearchResult: ProductSearchResult, productSearchParams: ProductSearchParams}>}
  */
-function addProductSearchToState(productSearchResult, currentProductSearch) {
-  const psr = new ProductSearchResult(productSearchResult)
+function addProductSearchToState(productSearchResult, productSearchParams, productSearchMap) {
+  // Add the result of the OCAPI ProductSearch call to the app's cached Map of
+  // results.
+    productSearchMap.set(productSearchParams.getHash, {
+      productSearchParams: productSearchParams,
+      productSearchResult: productSearchResult
+    });
+
+    return productSearchMap;
 }
