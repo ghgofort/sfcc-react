@@ -61,6 +61,12 @@
     toggleTime: 300
   },
 
+  // ProductSearch settings
+  productSearch: {
+    // The default number of products to return from a search as a paged result.
+    defaultPageSize: 25
+  },
+
   siteID: 'SiteGenesis'
 };
 
