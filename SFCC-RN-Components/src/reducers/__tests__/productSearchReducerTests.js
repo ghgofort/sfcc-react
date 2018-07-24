@@ -33,16 +33,23 @@ describe("productSearchReducer.js", function() {
     it("Should add a new ProductSearchResult to the Map", () => {
       const psr = new ProductSearchResult();
       const psp = new ProductSearchParams();
-      const psm = new Map(psp.getHash(), { productSearchResult: psr, productSearchParams: psm });
+      const psm = new Map();
+      psm.set(psp.getHash(), { productSearchResult: psr, productSearchParams: psp });
       // Mock Action
       const action = {
         type: actionTypes.RECEIVED_RESOURCE_PRODUCT_SEARCH,
         productSearchResult: psr,
         productSearchParams: psp
       };
+
+      expectedResult = {
+        ...DEFAULT_STATE,
+        productSearchMap: psm
+      };
+
       Reducer(productSearchReducer)
         .expect(action)
-        .toReturnState({ ...DEFAULT_STATE, category });
+        .toReturnState(expectedResult);
     });
   });
 });

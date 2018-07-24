@@ -15,17 +15,13 @@ export default class ProductSearchRefineParams {
    * @memberof ProductSearchRefineParams
    * @readonly
    */
-  static PRODUCT_TYPES = {
-    'product': 0,
-    'master': 1,
-    'set': 2,
-    'bundle': 3,
-    'variation_group': 4
-  };
-
-  static VALID_PARAM_TYPES = {
-
-  };
+  static PRODUCT_TYPES = [
+    { name: 'product', value: 0 },
+    { name: 'master', value: 1 },
+    { name: 'set', value: 2 },
+    { name: 'bundle', value: 3 },
+    { name: 'variation_group', value: 4 }
+  ];
 
   /**
    * @constructor
@@ -46,8 +42,6 @@ export default class ProductSearchRefineParams {
    *    values are not supported.
    */
   constructor(args = {}) {
-    /** @type {string[]} */
-    this.unsupportedRefinements = [];
     /** @type {string} */
     this.cgid = args.cgid || '';
     /** @type {number} */
@@ -58,23 +52,23 @@ export default class ProductSearchRefineParams {
     this.orderableOnly = args.orderableOnly || false;
     /** @type {number[]} */
     this.hitTypes = [];
-    const typeNames = Object.keys(ProductSearchRefineParams.PRODUCT_TYPES);
+    /** @type {string[]} */
+    this.pmid = [];
+    /** @type {string[]} */
+    this.hitTypeNames = ProductSearchRefineParams.PRODUCT_TYPES.map(pt => {
+      return pt.name;
+    });
 
     // Get the values from the hitTypes key/value pair, check for type, and
     // add the mapped number to the array of hitTypes.
     if (args.hitTypes && typeof args.hitTypes === 'string') {
       // Check if this is a supported product hit type.
-      if (typeNames.includes(args.hitTypes)) {
+      if (this.hitTypeNames.includes(args.hitTypes)) {
         // hitType is a String and IS a valid hitType.
-        this.hitTypes = [ProductSearchRefineParams.PRODUCT_TYPES[args.hitTypes]];
-      } else {
-        // hitType is a String but NOT a valid hitType.
-        this.hitTypes = [];
-        this.unsupportedRefinements.push({
-          refineType: 'hitType',
-          refineTypeFound: true,
-          refineSubType: args.hitTypes,
-          refineSubTypeFound: false
+        ProductSearchRefineParams.PRODUCT_TYPES.forEach(ht => {
+          if (ht.name === args.hitTypes) {
+            this.hitTypes.push(ht.value);
+          }
         });
       }
     } else if (
@@ -84,40 +78,132 @@ export default class ProductSearchRefineParams {
     ) {
       // hitType is an Array
       args.hitTypes.forEach(htype => {
-        if (typeof htype === 'string' && typeNames.includes(htype)) {
+        if (typeof htype === 'string' && this.hitTypeNames.includes(htype)) {
           // Array member is a String & IS a valid hitType
-          this.hitTypes.push(ProductSearchRefineParams.PRODUCT_TYPES[htype]);
+          ProductSearchRefineParams.PRODUCT_TYPES.forEach(ht => {
+            if (ht.name === htype) {
+              this.hitTypes.push(ht.value);
+            }
+          });
         } else if (
           typeof htype === 'number' &&
           htype >= 0 &&
-          htype < typeNames.length
+          htype < this.hitTypeNames.length
         ) {
           // Array member is a Number & IS a valid hitType
           this.hitTypes.push(htype);
-        } else {
-          this.unsupportedRefinements.push({
-            refineType: 'hitType',
-            refineTypeFound: true,
-            refineSubType: htype,
-            refineSubTypeFound: false
-          });
         }
-      });
-    } else {
-      this.unsupportedRefinements.push({
-        refineType: 'hitType',
-        refineTypeFound: false,
-        refineSubType: '',
-        refineSubTypeFound: false
       });
     }
 
-    /** @type {string[]} */
+    // Get the array of promotion IDs or a single promotion ID string and assign
+    // it to the instance member variable.
     if (args.pmid && typeof args.pmid === 'string') {
-      this.pmid = this.PRODUCT_TYPES.includes(args.pmid) ? [args.pmid] : [];
+      /** @type {string[]} */
+      this.pmid.push(args.pmid);
     } else if (args.pmid && Array.isArray(args.pmid)) {
+      /** @type {string[]} */
       this.pmid = args.pmid;
+    }
+
+    // If there are any custom search parameters included in the query then
+    // get them and assign them to the class instance properties.
+    this.custom = new Map();
+    if (args.custom) {
+      this._getCustomArgs(args.custom);
     }
   }
 
+  /**
+   * Gets any included custom refinement parameters from the arguments object
+   * and stores them as a map of key/value pairs for easy property access as
+   * an instance property 'custom'.
+   *
+   * @param {Array<{key: string, value: string|number}>} args - The arguments object passed from the class
+   *    constructor method.
+   */
+  _getCustomArgs(args) {
+    args.forEach(function(arg) {
+      let argTypeIsValid = typeof arg.value === 'string' ||
+        typeof arg.value === 'number';
+
+      if (typeof arg.key === 'string' && argTypeIsValid) {
+        this.custom.set(key, arg.value);
+      }
+    });
+  }
+
+  /**
+   * Gets the string constant that matches the stored number for the hit type
+   * product search refinement.
+   *
+   * @param {number} hitType - The number that corresponds to the hit-type constant.
+   * @return {string} - Returns the matching hit type string constant for the
+   *    specified hitType integer value, or returns an empty string if a match
+   *    is not found in the allowed hit type search refinements.
+   */
+  _getHitType(hitType) {
+    let hitName = '';
+    ProductSearchRefineParams.PRODUCT_TYPES.forEach(ht => {
+      if (ht.value === hitType) {
+        hitName = ht.name;
+      }
+    });
+
+    return hitName;
+  }
+
+  /**
+   * Returns a string representation of the refinement parameters held in the
+   * ProductSearchRefineParams instance's object properties.
+   *
+   * @return {string}
+   */
+  toString() {
+    let strThis = '';
+    let refineCount = 1;
+
+    // Check for Category Refinements and append to string.
+    if (typeof this.cgid === 'string' && this.cgid !== '') {
+      strThis += '&refine_' + refineCount + '=cgid=' + this.cgid;
+      refineCount++;
+    }
+
+    // Append the price param if both min & max price are included.
+    if (typeof this.minPrice === 'number' &&
+      this.minPrice >= 0 &&
+      typeof this.maxPricee === 'number' &&
+      this.maxPrice > this.minPrice
+    ) {
+      let strPrice = '(' + this.minPrice + '..' + this.maxPrice + ')';
+      strThis += '&refine_' + refineCount + '=price=' + strPrice;
+      refineCount++;
+    }
+
+    // Append the orderable only flag to the string representation.
+    if (this.orderableOnly) {
+      strThis += '&refine_' + refineCount + '=orderable_only=true';
+      refineCount++;
+    }
+
+    // Append any promotion ID search refinements.
+    if (this.pmid.length) {
+      strThis += '&refine_' + refineCount + '=pmid=';
+      this.pmid.forEach((id, i) => {
+        strThis += i === 0 ? id : '|' + id;
+      });
+      refineCount++;
+    }
+
+    // Append any included hit-type search refinement parameters.
+    if (this.hitTypes.length) {
+      strThis += '&refine_' + refineCount + '=htypes=';
+      this.hitTypes.forEach((ht, j) => {
+        strThis += j === 0 ? this._getHitType() : '|' + _getHitType(ht)
+      });
+      refineCount++;
+    }
+
+    return strThis;
+  }
 }

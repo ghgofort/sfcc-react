@@ -52,7 +52,7 @@ export default function productSearchReducer(state = DEFAULT_STATE, action = {})
 function addProductSearchToState(productSearchResult, productSearchParams, productSearchMap) {
   // Add the result of the OCAPI ProductSearch call to the app's cached Map of
   // results.
-    productSearchMap.set(productSearchParams.getHash, {
+    productSearchMap.set(productSearchParams.getHash(), {
       productSearchParams: productSearchParams,
       productSearchResult: productSearchResult
     });
