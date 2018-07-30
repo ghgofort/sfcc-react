@@ -51,11 +51,6 @@ export default class ProductSearchParams {
   }
 
   /**
-   * Hash function borrowed from:
-   *  - Stack Overflow question:
-   *    https://stackoverflow.com/questions/194846/is-there-any-kind-of-hash-code-function-in-javascript
-   *  - Answer by: KimKha
-   *
    * Returns a unique hash for the set of specified search parameters which is
    * used for saving the results to the app state, and then retrieving the
    * cached results if the cache hasn't timed out, and the result with the
@@ -64,15 +59,10 @@ export default class ProductSearchParams {
    * @return {string} - Returns the unique hash created from the set of search
    *    parameters, sort parameters, and refinements.
    *
-   * function(){
-   *  var hash = 0;
-   *  for (var i = 0; i < this.length; i++) {
-   *      var character = this.charCodeAt(i);
-   *      hash = ((hash<<5)-hash)+character;
-   *      hash = hash & hash; // Convert to 32bit integer
-   * }
-   * return hash;
-}
+   * Hash function borrowed from:
+   *  - Stack Overflow question:
+   *    https://stackoverflow.com/questions/194846/is-there-any-kind-of-hash-code-function-in-javascript
+   *  - Answer by: KimKha
    */
   getHash() {
     // Get the string representation of the class instance.

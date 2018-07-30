@@ -16,11 +16,14 @@ export default function productSearchReducer(state = DEFAULT_STATE, action = {})
   switch (action.type) {
     case actionTypes.FAILED_RESOURCE_PRODUCT_SEARCH:
       return {
-        /** @todo: Implement failed product search reducer case. */
+        isLoadingProductSearch: false,
+        ...state
       };
     case actionTypes.REQUEST_RESOURCE_PRODUCT_SEARCH:
       return {
-        /** @todo: Implement failed product search reducer case. */
+        isLoadingProductSearch: true,
+        productSearchParams: action.productSearchParams,
+        ...state
       };
     case actionTypes.RECEIVED_RESOURCE_PRODUCT_SEARCH:
       return {
@@ -59,3 +62,7 @@ function addProductSearchToState(productSearchResult, productSearchParams, produ
 
     return productSearchMap;
 }
+
+/* Selector Functions
+   ========================================================================== */
+

@@ -3,10 +3,10 @@
  * @fileoverview - ProductSearchHit OCAPI document class.
  */
 
-import Image from './Image';
-import ProductRef from './ProductRef';
-import ProductType from './ProductType';
-import VariationAttribute from './VariationAttribute';
+import Image from "./Image";
+import ProductRef from "./ProductRef";
+import ProductType from "./ProductType";
+import VariationAttribute from "./VariationAttribute";
 
 /**
  * @class ProductSearchHit
@@ -18,7 +18,7 @@ export default class ProductSearchHit {
    * @private
    * @type {String}
    */
-  _docType = 'ProductSerachHit';
+  _docType = "ProductSerachHit";
 
   /**
    * @constructor
@@ -29,15 +29,15 @@ export default class ProductSearchHit {
    */
   constructor(args) {
     /** @type {String} */
-    this._currency = args && args.currency ? args.currency : '';
+    this._currency = args && args.currency ? args.currency : "";
     /** @type {String} */
-    this._hitType = args && args.hit_type ? args.hit_type : '';
+    this._hitType = args && args.hit_type ? args.hit_type : "";
     /** @type {Image} */
     this._image = args && args.image ? new Image(args.image) : new Image();
     /** @type {String} */
-    this._link = args && args.link ? args.link : '';
+    this._link = args && args.link ? args.link : "";
     /** @type {Boolean} */
-    this._orderable = args && args.orderable ? args.orderable : '';
+    this._orderable = args && args.orderable ? args.orderable : "";
     /** @type {Number} */
     this._price = args && args.price ? args.price : 0;
     /** @type {Number} */
@@ -45,61 +45,125 @@ export default class ProductSearchHit {
     /** @type {Map<String, Number>} */
     this._prices = args && args.prices ? args.prices : new Map();
     /** @type {String} */
-    this._productID = args && args.product_id ? args.product_id : '';
+    this._productID = args && args.product_id ? args.product_id : "";
     /** @type {String} */
-    this._productName = args && args.product_name ? args.product_name : '';
+    this._productName = args && args.product_name ? args.product_name : "";
     /** @type {ProductType} */
-    this._productType = args && args.product_type ?
-      new ProductType(args.product_type) : new ProductType();
+    this._productType =
+      args && args.product_type
+        ? new ProductType(args.product_type)
+        : new ProductType();
     /** @type {ProductRef} */
-    this._representedProduct = args && args.represented_product ?
-      new ProductRef(args.represented_product) : new ProductRef();
+    this._representedProduct =
+      args && args.represented_product
+        ? new ProductRef(args.represented_product)
+        : new ProductRef();
     /** @type {ProductRef[]} */
-    this._representedProducts = args && args.represented_products &&
-      args.represented_products.length ?
-      args.represented_products.map((rp) => {
-        return new ProductRef(rp);
-      }) : [];
+    this._representedProducts =
+      args && args.represented_products && args.represented_products.length
+        ? args.represented_products.map(rp => {
+            return new ProductRef(rp);
+          })
+        : [];
     /** @type {VariationAttribute} */
-    this._variationAttributes = args && args.variation_attributes &&
-      args.variation_attributes.length ?
-      args.variation_attributes.map((va) => {
-        return new VariationAttribute(va);
-      }) : [];
+    this._variationAttributes =
+      args && args.variation_attributes && args.variation_attributes.length
+        ? args.variation_attributes.map(va => {
+            return new VariationAttribute(va);
+          })
+        : [];
   }
 
   /* Class Mutators / Accessors
      ======================================================================== */
 
-  get docType() { return this._docType }
-  get currency() { return this._currency }
-  set currency(value) { this._currency = value }
-  get hitType() { return this._hitType }
-  set hitType(value) { this._hitType = value }
-  get image() { return this._image }
-  set image(value) { this._image = value }
-  get link() { return this._link }
-  set link(value) { this._link = value }
-  get orderable() { return this._orderable }
-  set orderable(value) { this._orderable = value }
-  get price() { return this._price }
-  set price(value) { this._price = value }
-  get priceMax() { return this._priceMax }
-  set priceMax(value) { this._priceMax = value }
-  get prices() { return this._prices }
-  set prices(value) { this._prices = value }
-  get productID() { return this._productID }
-  set productID(value) { this._productID = value }
-  get productName() { return this._productName }
-  set productName(value) { this._productName = value }
-  get ProductType() { return this._ProductType }
-  set ProductType(value) { this._ProductType = value }
-  get representedProduct() { return this._representedProduct }
-  set representedProduct(value) { this._representedProduct = value }
-  get representedProducts() { return this._representedProducts }
-  set representedProducts(value) { this._representedProducts = value }
-  get variationAttributes() { return this._variationAttributes }
-  set variationAttributes(value) { this._variationAttributes = value }
+  get docType() {
+    return this._docType;
+  }
+  get currency() {
+    return this._currency;
+  }
+  set currency(value) {
+    this._currency = value;
+  }
+  get hitType() {
+    return this._hitType;
+  }
+  set hitType(value) {
+    this._hitType = value;
+  }
+  get image() {
+    return this._image;
+  }
+  set image(value) {
+    this._image = value;
+  }
+  get link() {
+    return this._link;
+  }
+  set link(value) {
+    this._link = value;
+  }
+  get orderable() {
+    return this._orderable;
+  }
+  set orderable(value) {
+    this._orderable = value;
+  }
+  get price() {
+    return this._price;
+  }
+  set price(value) {
+    this._price = value;
+  }
+  get priceMax() {
+    return this._priceMax;
+  }
+  set priceMax(value) {
+    this._priceMax = value;
+  }
+  get prices() {
+    return this._prices;
+  }
+  set prices(value) {
+    this._prices = value;
+  }
+  get productID() {
+    return this._productID;
+  }
+  set productID(value) {
+    this._productID = value;
+  }
+  get productName() {
+    return this._productName;
+  }
+  set productName(value) {
+    this._productName = value;
+  }
+  get ProductType() {
+    return this._ProductType;
+  }
+  set ProductType(value) {
+    this._ProductType = value;
+  }
+  get representedProduct() {
+    return this._representedProduct;
+  }
+  set representedProduct(value) {
+    this._representedProduct = value;
+  }
+  get representedProducts() {
+    return this._representedProducts;
+  }
+  set representedProducts(value) {
+    this._representedProducts = value;
+  }
+  get variationAttributes() {
+    return this._variationAttributes;
+  }
+  set variationAttributes(value) {
+    this._variationAttributes = value;
+  }
 
   /* Public Instance Methods
      ======================================================================== */
@@ -131,5 +195,4 @@ export default class ProductSearchHit {
 
     return doc;
   }
-
 }

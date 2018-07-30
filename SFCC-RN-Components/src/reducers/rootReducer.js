@@ -3,12 +3,14 @@ import homeReducer, * as fromHome from './homeReducer';
 import infoTileReducer, * as fromInfoTile from './infoTileReducer';
 import userAccountReducer, * as fromUserAccount from './userAccountReducer';
 import categoryTreeReducer, * as fromCategoryTree from './categoryTreeReducer';
+import productSearchReducer, * as fromProductSearch from './productSearchReducer';
 
 export default rootReducer = combineReducers({
   homeReducer,
   infoTileReducer,
   userAccountReducer,
-  categoryTreeReducer
+  categoryTreeReducer,
+  productSearchReducer
 });
 
 /**

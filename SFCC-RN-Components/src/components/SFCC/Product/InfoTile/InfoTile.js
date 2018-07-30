@@ -34,11 +34,7 @@ class InfoTile extends Component {
     this.state = {
       product: {
         id: "test",
-        imageGroups: [
-          {
-            images: []
-          }
-        ]
+        imageGroups: [{ images: [] }]
       },
       imgURL: "",
       imageIndex: 0

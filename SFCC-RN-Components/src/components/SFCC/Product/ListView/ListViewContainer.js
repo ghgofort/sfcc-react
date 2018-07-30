@@ -13,11 +13,11 @@ import ListView from './ListView';
 
 const mapStateToProps = state => {
   return {
-
-  }
+    productSearchMap: state.productSearchMap
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actionCreators, dispatch)
   };
